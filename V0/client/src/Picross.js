@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Switch from '@mui/material/Switch'
 
 function Square({ value, onSquareClick }) {
   return (
