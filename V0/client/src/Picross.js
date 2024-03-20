@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Switch from '@mui/material/Switch' ;
 
 function Square({ value, onSquareClick }) {
   return (
@@ -7,8 +8,7 @@ function Square({ value, onSquareClick }) {
     </button>
   );
 }
-
-export default function Board() {
+function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
@@ -36,4 +36,30 @@ export default function Board() {
       </div>
     </>
   );
+}
+
+export default function Game() {
+  // constructors(props) {
+  //   super(props);
+  //   this.state={
+  //     blackIsPlayed : true,
+  //     currentGame : Array(9).fill(null)
+  //   };
+  // }
+  
+  // handleSwitchChange(){
+  //   this.setState({
+  //     blackIsPlayed : !this.blackIsPlayed
+  //   })
+  // }
+    return(
+    <>
+      <div className='board'>
+        <Board />
+      </div>
+      <div className='switch'>
+        <Switch />
+      </div>
+    </>
+    );
 }
