@@ -45,13 +45,15 @@ function Game() {
   };
 
   const handleClick = (i) => {
-    const futureSquaresColor = squaresColor.slice();
-    futureSquaresColor[i] = blackIsPlayed ? true : false;
-    setSquaresColor(futureSquaresColor);
+    if (squaresState[i] == null) {
+      const futureSquaresColor = squaresColor.slice();
+      futureSquaresColor[i] = blackIsPlayed ? true : false;
+      setSquaresColor(futureSquaresColor);
 
-    const futureSquaresState = squaresState.slice();
-    futureSquaresState[i] = blackIsPlayed ? "B" : "X";
-    setSquaresState(futureSquaresState);
+      const futureSquaresState = squaresState.slice();
+      futureSquaresState[i] = blackIsPlayed ? "B" : "X";
+      setSquaresState(futureSquaresState);
+    }
   };
   
 
