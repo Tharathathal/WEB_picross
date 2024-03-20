@@ -1,65 +1,70 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Switch from '@mui/material/Switch' ;
 
-function Square({ value, onSquareClick }) {
+function Square({ isBlack, state, onSquareClick }) {
   return (
-    <button className="square" onClick={onSquareClick}>
-      {value}
+    <button
+      className={"square" + (isBlack ? " black" : "")}
+      onClick={onSquareClick}
+    >
+      {state}
     </button>
   );
 }
-function Board() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
 
-  function handleClick(i) {
-    const nextSquares = squares.slice();
-    nextSquares[i] = 'X';
-    setSquares(nextSquares);
-  }
-
+function Board({ squaresColor, squaresState, handleClick }) {
   return (
     <>
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+        {squaresColor.slice(0, 3).map((isBlack, index) => (
+          <Square key={index} isBlack={isBlack} state = {squaresState[index]} onSquareClick={() => handleClick(index)} />
+        ))}
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+        {squaresColor.slice(3, 6).map((isBlack, index) => (
+          <Square key={index + 3} isBlack={isBlack} state = {squaresState[index + 3]} onSquareClick={() => handleClick(index + 3)} />
+        ))}
       </div>
       <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+        {squaresColor.slice(6, 9).map((isBlack, index) => (
+          <Square key={index + 6} isBlack={isBlack} state = {squaresState[index + 6]} onSquareClick={() => handleClick(index + 6)} />
+        ))}
       </div>
     </>
   );
 }
 
-export default function Game() {
-  // constructors(props) {
-  //   super(props);
-  //   this.state={
-  //     blackIsPlayed : true,
-  //     currentGame : Array(9).fill(null)
-  //   };
-  // }
+function Game() {
+  const [blackIsPlayed, setBlackIsPlayed] = useState(true);
+
+  const [squaresColor, setSquaresColor] = useState(Array(9).fill(null));
+  const [squaresState, setSquaresState] = useState(Array(9).fill(null));
+
+  const handleSwitchChange = () => {
+    setBlackIsPlayed(!blackIsPlayed);
+  };
+
+  const handleClick = (i) => {
+    const futureSquaresColor = squaresColor.slice();
+    futureSquaresColor[i] = blackIsPlayed ? true : false;
+    setSquaresColor(futureSquaresColor);
+
+    const futureSquaresState = squaresState.slice();
+    futureSquaresState[i] = blackIsPlayed ? "B" : "X";
+    setSquaresState(futureSquaresState);
+  };
   
-  // handleSwitchChange(){
-  //   this.setState({
-  //     blackIsPlayed : !this.blackIsPlayed
-  //   })
-  // }
-    return(
+
+  return (
     <>
       <div className='board'>
-        <Board />
+        <Board squaresColor={squaresColor} squaresState={squaresState} handleClick={handleClick} />
       </div>
       <div className='switch'>
-        <Switch />
+        <Switch checked={blackIsPlayed} onChange={handleSwitchChange} />
       </div>
     </>
-    );
+  );
 }
+
+export default Game;

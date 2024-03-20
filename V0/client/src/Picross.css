@@ -71,6 +71,11 @@
     width: 34px;
   }
   
+  .black {
+    background-color: #000;
+  }
+  
+  
   .board-row:after {
     clear: both;
     content: '';
