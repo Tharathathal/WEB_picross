@@ -77,7 +77,15 @@
   .black {
     background-color: #000;
   }
+
+  .red{
+    background-color: red;
+    color : red;
+  }
   
+  .redx{
+    color : red;
+  }
   
   .board-row:after {
     clear: both;
