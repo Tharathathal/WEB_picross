@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [verif, setVerif] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,7 +25,7 @@ function LoginPage() {
           setMessage(`The username ${username} doesn't exist.`)
         } else if (data.message === "yes") {
           setMessage(`Nice to see you again ${username} !`)
-          //+ redirection ?
+          setVerif(true)
         } else if (data.message === "no") {
           setMessage(`This is not the right password for ${username}.`)
         }
@@ -57,6 +59,12 @@ function LoginPage() {
       </div>
       <button type="submit">Login</button>
       {message && <p>{message}</p>} 
+      {verif && (
+      <>
+        <label>Go to your personnal space ~~~~~~~~~~~~~~~~~~~~</label>
+        <Link to="userspace"><button>My user space</button></Link>
+      </>
+      )}
     </form>
   );
 }

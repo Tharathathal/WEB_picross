@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function SignupPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [verif, setVerif] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,12 +22,12 @@ function SignupPage() {
       if (response.ok) {
         const data = await response.json();
         if (data.message === "change") {
-          setMessage(`The username ${username} is already taken :( please change.`)
+          setMessage(`The username ${username} is already taken :( please change.`);
         } else if (data.message === "yes") {
-          setMessage(`Nice to see you among us ${username} :)`)
-          //+ redirection ?
+          setMessage(`Nice to see you among us ${username} :)`);
+          setVerif(true);
         } else if (data.message === "no") {
-          setMessage(`There was an error in the registration of ${username}.`)
+          setMessage(`There was an error in the registration of ${username}.`);
         }
       } else {
         console.error('Login failed');
@@ -57,6 +59,12 @@ function SignupPage() {
       </div>
       <button type="submit">Sign up</button>
       {message && <p>{message}</p>} 
+      {verif && (
+      <>
+        <label>Let's discover your personnal space ~~~~~~~~~~~~~~~~~~~~</label>
+        <Link to="/login/userspace"><button>My user space</button></Link>
+      </>
+      )}
     </form>
   );
 }
