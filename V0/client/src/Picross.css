@@ -9,8 +9,11 @@
   }
   
   h1 {
+    text-align: center;
     margin-top: 0;
-    font-size: 22px;
+    font-family: Impact, fantasy;
+    font-size: 40px;
+    color: #1976d2;
   }
   
   h2 {
@@ -92,5 +95,10 @@
   
   .game-info {
     margin-left: 20px;
+  }
+
+  .errors {
+    margin-left: 20px;
+    color: red;
   }
   
