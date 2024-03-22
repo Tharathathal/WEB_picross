@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch' ;
 
 function Square({ isBlack, state, onSquareClick }) {
@@ -12,13 +12,13 @@ function Square({ isBlack, state, onSquareClick }) {
   );
 }
 
-function Board({ squaresColor, squaresState, handleClick }) {
+function Board({ squaresColor, squaresState, handleClick, size }) {
   return (
     <>
       <div className="board-row">
         {squaresColor.slice(0, 3).map((isBlack, index) => (
           <Square key={index} isBlack={isBlack} state = {squaresState[index]} onSquareClick={() => handleClick(index)} />
-        ))}
+        ))} 
       </div>
       <div className="board-row">
         {squaresColor.slice(3, 6).map((isBlack, index) => (
@@ -26,7 +26,7 @@ function Board({ squaresColor, squaresState, handleClick }) {
         ))}
       </div>
       <div className="board-row">
-        {squaresColor.slice(6, 9).map((isBlack, index) => (
+        {squaresColor.slice(6, size).map((isBlack, index) => (
           <Square key={index + 6} isBlack={isBlack} state = {squaresState[index + 6]} onSquareClick={() => handleClick(index + 6)} />
         ))}
       </div>
@@ -37,10 +37,17 @@ function Board({ squaresColor, squaresState, handleClick }) {
 function Game() {
   const picture = [true,true,true,false,false,false,false,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
-  var [errors, setErrors] = useState(0);
+  var [errors, setErrors] = useState(0);  
+  const [size, setSize] = useState(9);
+  const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));
 
-  const [squaresColor, setSquaresColor] = useState(Array(9).fill(null));
-  const [squaresState, setSquaresState] = useState(Array(9).fill(null));
+  const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));
+  const [squaresState, setSquaresState] = useState(Array(size).fill(null));
+  
+  useEffect(() => {
+    const futureNumbers = getNumbers(numbers.slice(), picture, size);
+    setNumbers(futureNumbers);
+  }, []);
 
   const handleSwitchChange = () => {
     setBlackIsPlayed(!blackIsPlayed);
@@ -74,8 +81,30 @@ function Game() {
       </div>
       <p> Nombre d'erreurs : <span className='errors'> {errors} </span>
       </p>
+      <p> {numbers.join(' ')}</p>
     </>
   );
 }
 
 export default Game;
+
+function getNumbers(futureNumbers, pic, size){  
+  for (let i=0; i<Math.sqrt(size); i++){
+    var count = 0;
+    for (let j=i*Math.sqrt(size); j<(i*Math.sqrt(size)+Math.sqrt(size)); j++){
+        if (pic[j]===true){
+            count += 1;
+        }
+    }
+    futureNumbers[i] = count;
+
+    count = 0;
+    for (let j=i; j<size; j = j+Math.sqrt(size)){
+        if (pic[j]===true){
+            count += 1;
+        }
+    }
+    futureNumbers[i+Math.sqrt(size)] = count;
+  };
+  return futureNumbers;
+}
