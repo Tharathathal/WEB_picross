@@ -72,7 +72,8 @@ function Game() {
       <div className='switch'>
         <Switch checked={blackIsPlayed} onChange={handleSwitchChange} />
       </div>
-      <p> Nombre d'erreurs : {errors}</p>
+      <p> Nombre d'erreurs : <span className='errors'> {errors} </span>
+      </p>
     </>
   );
 }
