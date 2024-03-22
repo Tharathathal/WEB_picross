@@ -1,0 +1,182 @@
+import React, { useState } from 'react';
+import './App.css';
+import lena from './images/Lena.png';
+
+
+//fonction qui extrait les pixels de l'image choisie
+function ImagePixelExtractor({ image }) { 
+  const [pixels, setPixels] = useState([]);// Tableau qui contiendra les couleurs des pixels de l'image
+  const extractPixels = () => {
+    const canvas = document.createElement('canvas');// Création d'un élément canvas
+    const context = canvas.getContext('2d');// Récupération du contexte 2D du canvas
+    const img = new Image();// Création d'un élément image
+    img.crossOrigin = 'Anonymous';// Pour éviter les problèmes de CORS lors du chargement de l'image
+
+    img.onload = () => { // Une fois l'image chargée
+      canvas.width = img.width;// On définit la largeur du canvas à celle de l'image
+      canvas.height = img.height;// On définit la hauteur du canvas à celle de l'image
+      context.drawImage(img, 0, 0, img.width, img.height);// On dessine l'image dans le canvas
+      const imageData = context.getImageData(0, 0, img.width, img.height);// On récupère les données de l'image
+      const pixelColors = [];
+
+      // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        // Récupération des valeurs RGBA de chaque pixel
+        const red = imageData.data[i];
+        const green = imageData.data[i + 1];
+        const blue = imageData.data[i + 2];
+        const alpha = imageData.data[i + 3];
+        const color = `rgba(${red}, ${green}, ${blue}, ${alpha})`;// Création de la couleur du pixel dans un array rgba
+        pixelColors.push(color);// Ajout de la couleur du pixel au tableau pixelColors
+      }
+      setPixels(pixelColors);// Mise à jour du state pixels avec le tableau pixelColors
+      console.log(pixelColors);
+    };
+    img.src = image;// On définit la source de l'image
+  };
+
+  return (
+    <div>
+      <button onClick={extractPixels}>Extraire les pixels de l'image</button>
+      <div>
+        {pixels.length > 0 && (
+          <p>Nombre total de pixels : {pixels.length}</p>
+        )}
+        {pixels.map((color, index) => (
+          <div key={index} style={{ backgroundColor: color, width: '20px', height: '20px' }}></div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MoyenneCouleur({ image }) {
+  const [moyenne, setMoyenne] = useState([]);
+  const extractMoyenne = () => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+
+    img.onload = () => { 
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context.drawImage(img, 0, 0, img.width, img.height);
+      const imageData = context.getImageData(0, 0, img.width, img.height);
+      const pixelColors = [];
+      var red = 0;
+      var green = 0;
+      var blue = 0;
+      var alpha = 0;
+      // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        // Récupération des valeurs RGBA de chaque pixel
+        red += imageData.data[i];
+        green += imageData.data[i + 1];
+        blue += imageData.data[i + 2];
+        alpha += imageData.data[i + 3];
+      }
+      red = red / (imageData.data.length / 4);
+      green = green / (imageData.data.length / 4);
+      blue = blue / (imageData.data.length / 4);
+      alpha = alpha / (imageData.data.length / 4);
+      const color = `couleur_moyenne_rgba(${red}, ${green}, ${blue}, ${alpha})`;
+      pixelColors.push(color);
+      setMoyenne(pixelColors);
+      console.log(pixelColors);
+    };
+    img.src = image;
+  };
+  return (
+    <div>
+      <button onClick={extractMoyenne}>Extraire la moyenne de couleur de l'image</button>
+      <div>
+        {moyenne.length > 0 && (
+          <p>Moyenne de couleur : {moyenne}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DecoupageImageCarre({ image, taille }) {
+  const [decoupage, setDecoupage] = useState([]);
+  const extractDecoupage = () => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => { 
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const listeCarre = [];
+      context.drawImage(img, 0, 0, img.width, img.height);// On dessine l'image dans le canvas
+      const imageData = context.getImageData(0, 0, img.width, img.height);// On récupère les données de l'image
+      const pixelColors = [];
+
+      // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        // Récupération des valeurs RGBA de chaque pixel
+        const red = imageData.data[i];
+        const green = imageData.data[i + 1];
+        const blue = imageData.data[i + 2];
+        const alpha = imageData.data[i + 3];
+        const color = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+        pixelColors.push(color);
+      }
+      
+      const pixelSquareColors = [];
+      for (let i = 0; i < pixelColors.length; i += taille) {
+        const pixelSquareColors = [];
+        const row = pixelColors.slice(i, i + taille);
+        pixelSquareColors.push(row);
+      }
+
+      for (let i = 0; i < pixelSquareColors.length; i += taille) {
+        const square = [];
+        for (let j = 0; j < pixelSquareColors.length; j += taille) {
+        const row = pixelSquareColors[i];
+
+      }
+      listeCarre.push(square);
+    }
+    setDecoupage(listeCarre);
+    console.log(listeCarre);
+    img.src = image;
+  }
+  
+  
+  return (
+    <div>
+      <button onClick={extractDecoupage}>Découper l'image en carrés</button>
+      <div>
+        {decoupage.length > 0 && (
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {decoupage.map((colors, rowIndex) => (
+              <div key={rowIndex} style={{ display: 'flex' }}>
+                {colors.map((color, colIndex) => (
+                  <div key={colIndex} style={{ backgroundColor: color, width: '1px', height: '1px' }}></div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+}
+
+
+export default function Lenna() {
+    return (
+      <div className="Image-Test">
+        <h1>Lenna</h1>
+        <img src={lena} alt={"Lenna"} />
+        <ImagePixelExtractor image={lena} />
+        <MoyenneCouleur image={lena} />
+        <DecoupageImageCarre image={lena} taille={1} />
+      </div>
+    );
+  }
+

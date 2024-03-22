@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "prop-types": "^15.8.1",
-    "react-markdown": "^9.0.1",
-    "whatwg-fetch": "^3.6.20"
-  }
-}
