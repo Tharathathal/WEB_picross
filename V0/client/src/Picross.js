@@ -51,10 +51,19 @@ const MySwitch = styled(Switch)(({ theme }) => ({
 
 
 
-function Square({ isBlack, state, onSquareClick }) {
+function Square({ isBlack, state, error, onSquareClick }) {
+  let className = "square";
+  if (error&&isBlack){
+    className+=" red";
+  } else if (error&&!isBlack){
+    className+= " redx";
+  } else if (isBlack) {
+    className+=" black";
+  }
+
   return (
     <button
-      className={"square" + (isBlack ? " black" : "")}
+      className={className} 
       onClick={onSquareClick}
     >
       {state}
@@ -62,22 +71,22 @@ function Square({ isBlack, state, onSquareClick }) {
   );
 }
 
-function Board({ squaresColor, squaresState, handleClick, size }) {
+function Board({ squaresColor, squaresState, errors, handleClick }) {
   return (
     <>
       <div className="board-row">
         {squaresColor.slice(0, 3).map((isBlack, index) => (
-          <Square key={index} isBlack={isBlack} state = {squaresState[index]} onSquareClick={() => handleClick(index)} />
-        ))} 
-      </div>
-      <div className="board-row">
-        {squaresColor.slice(3, 6).map((isBlack, index) => (
-          <Square key={index + 3} isBlack={isBlack} state = {squaresState[index + 3]} onSquareClick={() => handleClick(index + 3)} />
+          <Square key={index} isBlack={isBlack} state = {squaresState[index]} error = {errors[index]} onSquareClick={() => handleClick(index)} />
         ))}
       </div>
       <div className="board-row">
-        {squaresColor.slice(6, size).map((isBlack, index) => (
-          <Square key={index + 6} isBlack={isBlack} state = {squaresState[index + 6]} onSquareClick={() => handleClick(index + 6)} />
+        {squaresColor.slice(3, 6).map((isBlack, index) => (
+          <Square key={index + 3} isBlack={isBlack} state = {squaresState[index + 3]} error = {errors[index + 3]} onSquareClick={() => handleClick(index + 3)} />
+        ))}
+      </div>
+      <div className="board-row">
+        {squaresColor.slice(6, 9).map((isBlack, index) => (
+          <Square key={index + 6} isBlack={isBlack} state = {squaresState[index + 6]} error = {errors[index + 6]} onSquareClick={() => handleClick(index + 6)} />
         ))}
       </div>
     </>
@@ -87,7 +96,8 @@ function Board({ squaresColor, squaresState, handleClick, size }) {
 function Game() {
   const picture = [true,true,true,false,false,false,false,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
-  var [errors, setErrors] = useState(0);  
+  //var [errors, setErrors] = useState(0);
+  const [errors, setErrors] = useState(Array(9).fill(null));
   const [size, setSize] = useState(9);
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));
 
@@ -105,10 +115,15 @@ function Game() {
 
   const handleClick = (i) => {
     if (squaresState[i] == null) {
+      const futureErrors = errors.slice();
+      futureErrors[i] = false;
       if (picture[i] !== blackIsPlayed){
         setErrors(errors +1);
         blackIsPlayed = !blackIsPlayed;
+        futureErrors[i] = true;
       }
+      setErrors(futureErrors);
+
       const futureSquaresColor = squaresColor.slice();
       futureSquaresColor[i] = blackIsPlayed ? true : false;
       setSquaresColor(futureSquaresColor);
@@ -124,12 +139,12 @@ function Game() {
     <>
       <h1> Picross </h1>
       <div className='board'>
-        <Board squaresColor={squaresColor} squaresState={squaresState} handleClick={handleClick} />
+        <Board squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
       </div>
       <div className='switch'>
       <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange}/>
       </div>
-      <p> Nombre d'erreurs : <span className='errors'> {errors} </span>
+      <p> Nombre d'erreurs : <span className='errors'> {errors.reduce((acc,curr)=>acc+ (curr ? 1:0),0)} </span> 
       </p>
       <p> {numbers.join(' ')}</p>
     </>
