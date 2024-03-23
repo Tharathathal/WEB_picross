@@ -109,7 +109,6 @@ function DecoupageImageCarre({ image, taille }) {
     img.onload = () => { 
       canvas.width = img.width;
       canvas.height = img.height;
-      const listeCarre = [];
       context.drawImage(img, 0, 0, img.width, img.height);// On dessine l'image dans le canvas
       const imageData = context.getImageData(0, 0, img.width, img.height);// On récupère les données de l'image
       const pixelColors = [];
@@ -127,35 +126,35 @@ function DecoupageImageCarre({ image, taille }) {
       
       const pixelSquareColors = [];
       for (let i = 0; i < pixelColors.length; i += taille) {
-        const pixelSquareColors = [];
         const row = pixelColors.slice(i, i + taille);
         pixelSquareColors.push(row);
       }
 
+      const listeCarre = [];
       for (let i = 0; i < pixelSquareColors.length; i += taille) {
         const square = [];
-        for (let j = 0; j < pixelSquareColors.length; j += taille) {
-        const row = pixelSquareColors[i];
-
+        for (let j = 0; j < pixelSquareColors[i].length; j += taille) {
+          const row = pixelSquareColors[i].slice(j, j + taille);
+          square.push(row);
+        }
+        listeCarre.push(square);
       }
-      listeCarre.push(square);
+      setDecoupage(listeCarre);
+      console.log(listeCarre);
     }
-    setDecoupage(listeCarre);
-    console.log(listeCarre);
     img.src = image;
   }
-  
   
   return (
     <div>
       <button onClick={extractDecoupage}>Découper l'image en carrés</button>
       <div>
         {decoupage.length > 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
             {decoupage.map((colors, rowIndex) => (
-              <div key={rowIndex} style={{ display: 'flex' }}>
+              <div key={rowIndex} style={{ display: 'flex', flexDirection: 'column' }}>
                 {colors.map((color, colIndex) => (
-                  <div key={colIndex} style={{ backgroundColor: color, width: '1px', height: '1px' }}></div>
+                  <div key={colIndex} style={{ backgroundColor: color, width: `${taille}px`, height: `${taille}px`, margin: '2px' }}></div>
                 ))}
               </div>
             ))}
@@ -165,8 +164,50 @@ function DecoupageImageCarre({ image, taille }) {
     </div>
   );
 }
-}
 
+function BlackAndWhiteImage({ image }) {
+  const [bwImage, setBwImage] = useState(null);
+
+  const convertToBlackAndWhite = () => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context.drawImage(img, 0, 0, img.width, img.height);
+      const imageData = context.getImageData(0, 0, img.width, img.height);
+      const pixels = imageData.data;
+
+      for (let i = 0; i < pixels.length; i += 4) {
+        const red = pixels[i];
+        const green = pixels[i + 1];
+        const blue = pixels[i + 2];
+        const gray = (red + green + blue) / 3;
+
+        pixels[i] = gray;
+        pixels[i + 1] = gray;
+        pixels[i + 2] = gray;
+      }
+
+      context.putImageData(imageData, 0, 0);
+      const bwImageUrl = canvas.toDataURL();
+      setBwImage(bwImageUrl);
+    };
+
+    img.src = image;
+  };
+
+  return (
+        <div>
+          <button onClick={convertToBlackAndWhite}>Convert to Black and White</button>
+            <div>
+            {bwImage && <img src={bwImage} alt="Black and White" />}
+            </div>
+        </div>
+      );
+    }
 
 export default function Lenna() {
     return (
@@ -176,6 +217,7 @@ export default function Lenna() {
         <ImagePixelExtractor image={lena} />
         <MoyenneCouleur image={lena} />
         <DecoupageImageCarre image={lena} taille={1} />
+        <BlackAndWhiteImage image={lena} />
       </div>
     );
   }
