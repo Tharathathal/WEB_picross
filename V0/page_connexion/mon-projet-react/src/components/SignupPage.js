@@ -39,7 +39,7 @@ function SignupPage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className="container">
         <label>Create a username :</label>
         <input
           type="text"
@@ -48,7 +48,7 @@ function SignupPage() {
           required
         />
       </div>
-      <div>
+      <div className="container">
         <label>Create a password :</label>
         <input
           type="password"
@@ -57,14 +57,20 @@ function SignupPage() {
           required
         />
       </div>
-      <button type="submit">Sign up</button>
+      <div className="container">
+      <button type="submit" className="loginButton">Sign up</button>
+      </div>
+      <div className="container">
       {message && <p>{message}</p>} 
+      </div>
+      <div className="container">
       {verif && (
       <>
         <label>Let's discover your personnal space ~~~~~~~~~~~~~~~~~~~~</label>
-        <Link to="/login/userspace"><button>My user space</button></Link>
+        <Link to={`/${username}`}><button className="loginButton">My user space</button></Link>
       </>
       )}
+      </div>
     </form>
   );
 }

@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.container {
+  display: flex; /* Utilise Flexbox */
+  justify-content: center; /* Centre horizontalement dans le conteneur */
+  align-items: center; /* Centre verticalement dans le conteneur */
+  /* height: 20vh; à mettre si on veut pour taille du conteneur */
+  flex-direction: column; /* Organise les éléments en colonne */
+}
+
+.loginButton {
+  padding: 10px 20px;
+  background-color: #007bff; /* Couleur de fond bleue */
+  color: white; /* Texte blanc */
+  border: none;
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Change le curseur en main pour indiquer que c'est cliquable */
+  font-size: 16px; /* Augmente la taille du texte */
+  transition: background-color 0.3s ease; /* Transition douce pour le survol */
+}
+
+.loginButton:hover {
+  background-color: #0056b3; /* Couleur de fond plus foncée au survol */
+}

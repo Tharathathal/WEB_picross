@@ -34,6 +34,10 @@ userSchema.methods.getScore = function () {
     return this.score;
 }
 
+userSchema.methods.getDate = function () {
+  return this.createdAt;
+}
+
 // Création du modèle User basé sur le schéma
 const User = mongoose.model('User', userSchema, 'Users'); // (nom du modèle, schéma, nom de la collection (opt))
 
@@ -75,7 +79,9 @@ app.post('/signup', async (req, res) => {
   } else {
     const newUser = new User({
       username: username,
-      password: password, 
+      password: password,
+      game : 0,
+      score : 0 
     });
     try {
       await newUser.save();
@@ -89,6 +95,21 @@ app.post('/signup', async (req, res) => {
   // Répondre au client
   res.status(200).json({ message: response });
 });
+
+//gérer les requêtes POST à `/:username`
+app.post('/userspace', async (req, res) => {
+  const { username } = req.body;
+  const user = await User.findOne({ username : username });
+
+
+  const createdAt = user.createdAt; // Utilisez directement `createdAt` sans méthode
+  const rep_game = user.game; // Accès direct à `game`
+  const rep_score = user.score; // Accès direct à `score`
+
+  // Répondre au client
+  res.status(200).json({ date: createdAt.toLocaleDateString(), game : rep_game, score : rep_score });
+});
+
 
 // Démarrage du serveur
 app.listen(port, () => {

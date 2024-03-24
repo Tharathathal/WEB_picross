@@ -37,36 +37,43 @@ function LoginPage() {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Input your username :</label>
-        <input
-          type="text"
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+  if (verif) {
+    return (
+      <div className="container">
+        <label>Go to your personal space:</label>
+        <Link to={`/${username}`}><button className="loginButton">My user space</button></Link>
       </div>
-      <div>
-        <label>Input your password :</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-      {message && <p>{message}</p>} 
-      {verif && (
-      <>
-        <label>Go to your personnal space ~~~~~~~~~~~~~~~~~~~~</label>
-        <Link to="userspace"><button>My user space</button></Link>
-      </>
-      )}
-    </form>
-  );
+    );
+  } else {
+    return (
+      <form onSubmit={handleSubmit}>
+        <div className="container">
+          <label>Input your username :</label>
+          <input
+            type="text"
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="container">
+          <label>Input your password :</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="container">
+        <button type="submit" className="loginButton">Login</button>
+        </div>
+        <div className="container">
+        {message && <p>{message}</p>} 
+        </div>
+      </form>
+    );
+  }
 }
 
 export default LoginPage;
