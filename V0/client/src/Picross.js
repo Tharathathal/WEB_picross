@@ -93,10 +93,40 @@ function Board({ squaresColor, squaresState, errors, handleClick }) {
   );
 }
 
+function Heart ({ filled }) {
+  if (filled){
+  return <span className="heart">❤</span>;
+  }
+};
+function Hearts ({ numErrors }) {
+  const [hearts, setHearts] = useState(Array(5).fill(true));
+
+  React.useEffect(() => {
+    if (numErrors > 0 && numErrors <= 5) {
+      setHearts((prevHearts) => {
+        const newHearts = [...prevHearts];
+        for (let i = 0; i < numErrors; i++) {
+          newHearts[i] = false;
+        }
+        return newHearts;
+      });
+    }
+  }, [numErrors]);
+
+  return (
+    <div>
+      {hearts.map((filled, index) => (
+        <Heart key={index} filled={filled} />
+      ))}
+    </div>
+  );
+};
+
+
 function Game() {
   const picture = [true,true,true,false,false,false,false,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
-  //var [errors, setErrors] = useState(0);
+
   const [errors, setErrors] = useState(Array(9).fill(null));
   const [size, setSize] = useState(9);
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));
@@ -136,7 +166,6 @@ function Game() {
       const futureErrors = errors.slice();
       futureErrors[i] = false;
       if (picture[i] !== blackIsPlayed){
-        //setErrors(errors +1);
         blackIsPlayed = !blackIsPlayed;
         futureErrors[i] = true;
       }
@@ -167,9 +196,7 @@ function Game() {
           <div className="switch">
             <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
           </div>
-          <p>
-            Nombre d'erreurs : <span className="errors">{errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)}</span>
-          </p>
+          <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
           <p> {numbers.join(" ")}</p>
         </>
       )}
