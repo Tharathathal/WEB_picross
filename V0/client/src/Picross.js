@@ -109,6 +109,24 @@ function Game() {
     setNumbers(futureNumbers);
   }, []);
 
+  const checkEndgame = () => {
+    let endgame,win;
+    
+    const numErrors = errors.reduce((acc,curr)=>acc+ (curr ? 1:0),0);
+    if (numErrors > 4) {
+      endgame = true;
+      win = false;
+    } else {
+      endgame = squaresColor.every((e)=>e!==null);
+      if (endgame) {
+        win = true;
+      }
+    }
+    return {endgame,win};
+  }
+
+  const {endgame,win} = checkEndgame();
+
   const handleSwitchChange = () => {
     setBlackIsPlayed(!blackIsPlayed);
   };
@@ -118,7 +136,7 @@ function Game() {
       const futureErrors = errors.slice();
       futureErrors[i] = false;
       if (picture[i] !== blackIsPlayed){
-        setErrors(errors +1);
+        //setErrors(errors +1);
         blackIsPlayed = !blackIsPlayed;
         futureErrors[i] = true;
       }
@@ -134,19 +152,27 @@ function Game() {
     }
   };
   
-
   return (
     <>
       <h1> Picross </h1>
-      <div className='board'>
-        <Board squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
-      </div>
-      <div className='switch'>
-      <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange}/>
-      </div>
-      <p> Nombre d'erreurs : <span className='errors'> {errors.reduce((acc,curr)=>acc+ (curr ? 1:0),0)} </span> 
-      </p>
-      <p> {numbers.join(' ')}</p>
+      {endgame ? (
+        <div>
+          {win ? <h2> You won ! </h2> : <h2> Game over </h2>}
+        </div>
+      ) : (
+        <>
+          <div className="board">
+            <Board squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
+          </div>
+          <div className="switch">
+            <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
+          </div>
+          <p>
+            Nombre d'erreurs : <span className="errors">{errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)}</span>
+          </p>
+          <p> {numbers.join(" ")}</p>
+        </>
+      )}
     </>
   );
 }
