@@ -72,8 +72,8 @@ function Square({ isBlack, state, error, onSquareClick }) {
 }
 
 function Board({ squaresColor, squaresState, errors, handleClick }) {
-  return (
-    <>
+    return (
+    <>      
       <div className="board-row">
         {squaresColor.slice(0, 3).map((isBlack, index) => (
           <Square key={index} isBlack={isBlack} state = {squaresState[index]} error = {errors[index]} onSquareClick={() => handleClick(index)} />
@@ -190,6 +190,16 @@ function Game() {
         </div>
       ) : (
         <>
+          <div className="board-row">
+            {numbers.slice(3, 6).map((number, index) => (
+                <Square key={index} isBlack={false} state={number} />
+            ))}
+          </div>
+          <div className="board-row">
+            {numbers.slice(0, 3).map((number, index) => (
+                <Square key={index} isBlack={false} state={number} />
+            ))}
+          </div>
           <div className="board">
             <Board squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
           </div>
