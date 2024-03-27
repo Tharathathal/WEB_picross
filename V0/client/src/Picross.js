@@ -117,7 +117,7 @@ function Hearts ({ numErrors }) {
 
 
 function Game() {
-  const picture = [true,true,true,false,false,false,false,false,false];
+  const picture = [true,false,true,false,true,false,true,false,true];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
 
   
@@ -195,8 +195,10 @@ function Game() {
         <>
           <div className="container">
             <div className="row-wrapper">
-              <div className="board-row">
+              <div className="corner">
                 <Square/>
+              </div>
+              <div className="board-row">
                 {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
                   <Square key={index} isBlack={false} state={number} />
                 ))}
@@ -230,23 +232,46 @@ function Game() {
 
 export default Game;
 
-function getNumbers(futureNumbers, pic, size){  
-  for (let i=0; i<Math.sqrt(size); i++){
-    var count = 0;
-    for (let j=i*Math.sqrt(size); j<(i*Math.sqrt(size)+Math.sqrt(size)); j++){
-        if (pic[j]===true){
-            count += 1;
-        }
-    }
-    futureNumbers[i] = count;
+function getNumbers(futureNumbers, pic, size){
+  var count = 0;  
+  var values = [];
 
-    count = 0;
-    for (let j=i; j<size; j = j+Math.sqrt(size)){
-        if (pic[j]===true){
-            count += 1;
+  for (let i=0; i<Math.sqrt(size); i++){
+    for (let j=i*Math.sqrt(size); j<(i*Math.sqrt(size)+Math.sqrt(size)); j++){
+      if (pic[j]===true){
+        count += 1;
+      }
+      else{
+        if (count != 0){      
+          values.push(count);
+          count = 0;
         }
+      }
+    }   
+    if (values.length == 0 || count!=0){
+      values.push(count);
+    } 
+    futureNumbers[i] = values;
+    count = 0;
+    values = [];
+    
+    for (let j=i; j<size; j=j+Math.sqrt(size)){
+      if (pic[j]===true){
+        count += 1;
+      }
+      else{
+        if (count != 0){      
+          values.push(count);
+          count = 0;
+        }
+      }
     }
-    futureNumbers[i+Math.sqrt(size)] = count;
+    if (values.length == 0 || count!=0){
+      values.push(count);
+    }    
+    futureNumbers[i+Math.sqrt(size)] = values;
+    count = 0;
+    values = [];
   };
   return futureNumbers;
 }

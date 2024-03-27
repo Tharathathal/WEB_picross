@@ -77,12 +77,12 @@
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 34px;
+    height: 40px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 40px;
   }
   
   .black {
@@ -119,6 +119,27 @@
   
   .board-row {
     display: flex;
+  }
+  
+  .corner {
+    display: flex;
+  }
+
+  .corner .square {
+    width: 50px;
+    height: 50px;
+    border-top: 0px;
+    border-left: 0px;
+  }
+
+  .board-column .square{
+    font-size: 12px;
+    width: 50px;
+  }
+  
+  .row-wrapper .square{
+    font-size: 12px;
+    height: 50px;
   }
   
   .status {
