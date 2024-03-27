@@ -42,9 +42,12 @@ function UserSpace() {
         <div>You made {game} games</div>
         <div>You cumulate {score} points</div>
       </div>
+      <div className="container">
+      <button className="loginButton">NEW GAME</button>
+      </div>
     </>
   );
 }
-//ajouter un bouton qui link vers nouvelle partie
+//<Link to="/newgame"><button className="loginButton">NEW GAME</button></Link>
 
 export default UserSpace;
