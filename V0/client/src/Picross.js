@@ -191,24 +191,33 @@ function Game() {
         </div>
       ) : (
         <>
-          <div className="board-row">
-            {numbers.slice(3, 6).map((number, index) => (
-                <Square key={index} isBlack={false} state={number} />
-            ))}
+          <div className="container">
+            <div className="row-wrapper">
+              <div className="board-row">
+                <Square/>
+                {numbers.slice(3, 6).map((number, index) => (
+                  <Square key={index} isBlack={false} state={number} />
+                ))}
+              </div>
+            </div>
+            <div className="board-wrapper">
+              <div className="board-column">
+                {numbers.slice(0, 3).map((number, index) => (
+                  <Square key={index} isBlack={false} state={number} />
+                ))}
+              </div>
+              <div className="board">
+                <Board size={Math.sqrt(size)} squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
+              </div>
+            </div>
           </div>
-          <div className="board-row">
-            {numbers.slice(0, 3).map((number, index) => (
-                <Square key={index} isBlack={false} state={number} />
-            ))}
-          </div>
-          <div className="board">
-            <Board size={Math.sqrt(size)} squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
-          </div>
+
+
+
           <div className="switch">
             <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
           </div>
           <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
-          <p> {numbers.join(" ")}</p>
         </>
       )}
     </>
