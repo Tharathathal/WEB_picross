@@ -71,26 +71,19 @@ function Square({ isBlack, state, error, onSquareClick }) {
   );
 }
 
-function Board({ squaresColor, squaresState, errors, handleClick }) {
-    return (
-    <>      
-      <div className="board-row">
-        {squaresColor.slice(0, 3).map((isBlack, index) => (
-          <Square key={index} isBlack={isBlack} state = {squaresState[index]} error = {errors[index]} onSquareClick={() => handleClick(index)} />
-        ))}
-      </div>
-      <div className="board-row">
-        {squaresColor.slice(3, 6).map((isBlack, index) => (
-          <Square key={index + 3} isBlack={isBlack} state = {squaresState[index + 3]} error = {errors[index + 3]} onSquareClick={() => handleClick(index + 3)} />
-        ))}
-      </div>
-      <div className="board-row">
-        {squaresColor.slice(6, 9).map((isBlack, index) => (
-          <Square key={index + 6} isBlack={isBlack} state = {squaresState[index + 6]} error = {errors[index + 6]} onSquareClick={() => handleClick(index + 6)} />
-        ))}
-      </div>
-    </>
-  );
+function Board({ size,squaresColor, squaresState, errors, handleClick }) {
+  let rows = [];
+
+  for (let i = 0; i < size; i++) {
+    const Row =  squaresColor.slice(i*size, (i+1)*size).map((isBlack, index) => (
+      <Square key={index + i*size} isBlack={isBlack} state = {squaresState[index + i*size]} error = {errors[index+ i*size]} onSquareClick={() => handleClick(index + i*size)} />
+    ));
+
+    rows.push(<div className="board-row" key={i}>{Row}</div>);
+  }
+  
+  return <>{rows}</>
+
 }
 
 function Heart ({ filled }) {
@@ -127,12 +120,14 @@ function Game() {
   const picture = [true,false,true,false,false,false,false,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
 
-  const [errors, setErrors] = useState(Array(9).fill(null));
+  
   const [size, setSize] = useState(9);
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));
 
   const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));
   const [squaresState, setSquaresState] = useState(Array(size).fill(null));
+
+  const [errors, setErrors] = useState(Array(size).fill(null));
   
   useEffect(() => {
     const futureNumbers = getNumbers(numbers.slice(), picture, size);
@@ -202,19 +197,19 @@ function Game() {
             <div className="row-wrapper">
               <div className="board-row">
                 <Square/>
-                {numbers.slice(3, 6).map((number, index) => (
+                {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
                   <Square key={index} isBlack={false} state={number} />
                 ))}
               </div>
             </div>
             <div className="board-wrapper">
               <div className="board-column">
-                {numbers.slice(0, 3).map((number, index) => (
+                {numbers.slice(0, numbers.length/2).map((number, index) => (
                   <Square key={index} isBlack={false} state={number} />
                 ))}
               </div>
               <div className="board">
-                <Board squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
+                <Board size={Math.sqrt(size)} squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
               </div>
             </div>
           </div>
