@@ -71,26 +71,19 @@ function Square({ isBlack, state, error, onSquareClick }) {
   );
 }
 
-function Board({ squaresColor, squaresState, errors, handleClick }) {
-    return (
-    <>      
-      <div className="board-row">
-        {squaresColor.slice(0, 3).map((isBlack, index) => (
-          <Square key={index} isBlack={isBlack} state = {squaresState[index]} error = {errors[index]} onSquareClick={() => handleClick(index)} />
-        ))}
-      </div>
-      <div className="board-row">
-        {squaresColor.slice(3, 6).map((isBlack, index) => (
-          <Square key={index + 3} isBlack={isBlack} state = {squaresState[index + 3]} error = {errors[index + 3]} onSquareClick={() => handleClick(index + 3)} />
-        ))}
-      </div>
-      <div className="board-row">
-        {squaresColor.slice(6, 9).map((isBlack, index) => (
-          <Square key={index + 6} isBlack={isBlack} state = {squaresState[index + 6]} error = {errors[index + 6]} onSquareClick={() => handleClick(index + 6)} />
-        ))}
-      </div>
-    </>
-  );
+function Board({ size,squaresColor, squaresState, errors, handleClick }) {
+  let rows = [];
+
+  for (let i = 0; i < size; i++) {
+    const Row =  squaresColor.slice(i*size, (i+1)*size).map((isBlack, index) => (
+      <Square key={index + i*size} isBlack={isBlack} state = {squaresState[index + i*size]} error = {errors[index+ i*size]} onSquareClick={() => handleClick(index + i*size)} />
+    ));
+
+    rows.push(<div className="board-row" key={i}>{Row}</div>);
+  }
+  
+  return <>{rows}</>
+
 }
 
 function Heart ({ filled }) {
@@ -209,7 +202,7 @@ function Game() {
             ))}
           </div>
           <div className="board">
-            <Board squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
+            <Board size={Math.sqrt(size)} squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
           </div>
           <div className="switch">
             <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
