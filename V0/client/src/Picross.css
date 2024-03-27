@@ -87,10 +87,27 @@
     color : red;
   }
   
-  .board-row:after {
-    clear: both;
-    content: '';
-    display: table;
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .board-wrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .row-wrapper {
+    display: flex;
+  }
+  
+  .board-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .board-row {
+    display: flex;
   }
   
   .status {
