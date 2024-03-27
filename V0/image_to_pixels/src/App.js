@@ -99,52 +99,6 @@ function MoyenneCouleur({ image }) {
   );
 }
 
-function MoyenneCouleurCarre({ listeCarre }) {
-  const [moyenne, setMoyenne] = useState([]);
-  const extractMoyenneCarre = () => {
-    const pixelColors = [];
-    const TrueFalse = [];
-    var red = 0;
-    var green = 0;
-    var blue = 0;
-    var gray = 0;
-    var alpha = 0;
-    // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
-    for (let i = 0; i < listeCarre.length; i++) {
-      for (let j = 0; j < listeCarre[i].length; j++) {
-        red += listeCarre[i][j];
-        green += listeCarre[i][j + 1];
-        blue += listeCarre[i][j + 2];
-        alpha += listeCarre[i][j + 3];
-      }
-      red = red / (listeCarre[i].length / 4);
-      green = green / (listeCarre[i].length / 4);
-      blue = blue / (listeCarre[i].length / 4);
-      alpha = alpha / (listeCarre[i].length / 4);
-      gray = (red + green + blue) / 3;
-      const color = `couleur_moyenne_rgba(${red}, ${green}, ${blue}, ${alpha})`;
-      if (gray > 128) {
-        TrueFalse.push(true);
-      } else {
-        TrueFalse.push(false);
-      }
-      pixelColors.push(color);
-    }
-    setMoyenne(pixelColors);
-    console.log(pixelColors, TrueFalse);
-  };
-  return (
-    <div>
-      <button onClick={extractMoyenneCarre}>Extraire la moyenne de couleur des carrés</button>
-      <div>
-        {moyenne.length > 0 && (
-          <p>Moyenne de couleur : {moyenne}</p>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function DecoupageImageCarre({ image, taille}) {
   const [decoupage, setDecoupage] = useState([]);
   const extractDecoupage = () => {
