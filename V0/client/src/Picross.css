@@ -1,24 +1,33 @@
 * {
     box-sizing: border-box;
   }
+
+  @font-face {
+    font-family: 'Mighty-Souly';
+    src: local('Mighty-Souly'), url(./fonts/MightySouly-lxggD.ttf) format('truetype');
+  }
   
   body {
     font-family: sans-serif;
     margin: 20px;
     padding: 0;
+    color : #19115e;
   }
   
   h1 {
     text-align: center;
     margin-top: 0;
-    font-family: Impact, fantasy;
-    font-size: 40px;
-    color: #1976d2;
+    font-family: Mighty-Souly;
+    font-size: 60px;
+    color: #f37f1c;
   }
   
   h2 {
+    text-align: center;
     margin-top: 0;
-    font-size: 20px;
+    font-family: Mighty-Souly;
+    font-size: 60px;
+    color:crimson;
   }
   
   h3 {
@@ -57,12 +66,14 @@
     font-family: sans-serif;
     margin: 20px;
     padding: 0;
+    color : #f37f1c;
   }
   
   .square {
     background: #fff;
-    border: 1px solid #999;
+    border: 1px solid black;
     float: left;
+    font-family: Mighty-Souly;
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
@@ -79,12 +90,12 @@
   }
 
   .red{
-    background-color: red;
-    color : red;
+    background-color: crimson;
+    color :crimson;
   }
   
   .redx{
-    color : red;
+    color : crimson;
   }
   
   .container {
@@ -141,6 +152,6 @@
 
   .errors {
     margin-left: 20px;
-    color: red;
+    color: #ef2f22;
   }
   
