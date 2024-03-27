@@ -17,7 +17,8 @@
   
   h1 {
     text-align: center;
-    margin-top: 0;
+    margin-top: 30px;
+    margin-bottom: 50px;
     font-family: Mighty-Souly;
     font-size: 60px;
     color: #f37f1c;
@@ -104,6 +105,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
   }
   
   .board-wrapper {
@@ -134,11 +137,13 @@
   }
 
   .board-column .square{
-    font-size: 10px;
+    font-size: 15px;
+    font-family: sans-serif;
   }
   
   .row-wrapper .square{
-    font-size: 10px;
+    font-size: 15px;
+    font-family: sans-serif;
   }
   
   .status {
@@ -158,3 +163,8 @@
     color: #ef2f22;
   }
   
+  .heart {
+    margin-top: 10px;
+    margin-left: 140px;
+    font-size: 25px;
+  }

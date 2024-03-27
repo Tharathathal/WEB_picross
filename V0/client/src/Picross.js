@@ -88,7 +88,7 @@ function Board({ size,squaresColor, squaresState, errors, handleClick }) {
 
 function Heart ({ filled }) {
   if (filled){
-  return <span className="heart">❤</span>;
+  return <span>❤</span>;
   }
 };
 function Hearts ({ numErrors }) {
@@ -107,7 +107,7 @@ function Hearts ({ numErrors }) {
   }, [numErrors]);
 
   return (
-    <div>
+    <div className="heart">
       {hearts.map((filled, index) => (
         <Heart key={index} filled={filled} />
       ))}
@@ -193,6 +193,7 @@ function Game() {
         </div>
       ) : (
         <>
+          <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
           <div className="container">
             <div className="row-wrapper">
               <div className="corner">
@@ -207,7 +208,7 @@ function Game() {
             <div className="board-wrapper">
               <div className="board-column">
                 {numbers.slice(0, numbers.length/2).map((number, index) => (
-                  <Square key={index} isBlack={false} state={number} />
+                  <Square key={index} isBlack={false} state={Array.isArray(number) ? number.join(' · ') : number} />
                 ))}
               </div>
               <div className="board">
@@ -221,7 +222,6 @@ function Game() {
           <div className="switch">
             <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
           </div>
-          <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
         </>
       )}
     </>
