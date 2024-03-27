@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch' ;
 import { styled } from '@mui/material/styles'
 
+//Parametrage du switch
 const MySwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -50,7 +51,7 @@ const MySwitch = styled(Switch)(({ theme }) => ({
 }));
 
 
-
+//Gestion des carrés
 function Square({ isBlack, state, error, onSquareClick }) {
   let className = "square";
   if (error&&isBlack){
@@ -71,6 +72,7 @@ function Square({ isBlack, state, error, onSquareClick }) {
   );
 }
 
+//Gestion du plateau
 function Board({ size,squaresColor, squaresState, errors, handleClick }) {
   let rows = [];
 
@@ -86,6 +88,7 @@ function Board({ size,squaresColor, squaresState, errors, handleClick }) {
 
 }
 
+//Gestion des coeurs pour les erreurs
 function Heart ({ filled }) {
   if (filled){
   return <span>❤</span>;
@@ -115,25 +118,26 @@ function Hearts ({ numErrors }) {
   );
 };
 
-
+//Gestion du jeu global
 function Game() {
   const picture = [true,true,true,false,true,false,true,false,false];
-  var [blackIsPlayed, setBlackIsPlayed] = useState(true);
-
+  var [blackIsPlayed, setBlackIsPlayed] = useState(true);     //Booléen correspondant à l'action
   
-  const [size, setSize] = useState(9);
-  const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));
+  const [size, setSize] = useState(9);    //Taille du plateau
+  const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));    //Tableau des valeurs de carrés consécutifs
 
-  const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));
-  const [squaresState, setSquaresState] = useState(Array(size).fill(null));
+  const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));   //Etat de la couleur des carrés (noir ou rouge)
+  const [squaresState, setSquaresState] = useState(Array(size).fill(null));   //Etat du contenu des carrés (plein ou X)
 
-  const [errors, setErrors] = useState(Array(size).fill(null));
+  const [errors, setErrors] = useState(Array(size).fill(null));      //Tableau des erreurs           
   
+  //Détermine les valeurs de carrés consécutifs
   useEffect(() => {
     const futureNumbers = getNumbers(numbers.slice(), picture, size);
     setNumbers(futureNumbers);
   }, []);
 
+  //Vérifie si victoire ou défaite
   const checkEndgame = () => {
     let endgame,win;
     
@@ -160,24 +164,28 @@ function Game() {
 
   const {endgame,win} = checkEndgame();
 
+  //Définit l'état du booléen d'action
   const handleSwitchChange = () => {
     setBlackIsPlayed(!blackIsPlayed);
   };
 
+  //Gestion du click sur un carré
   const handleClick = (i) => {
     if (squaresState[i] == null) {
       const futureErrors = errors.slice();
       futureErrors[i] = false;
-      if (picture[i] !== blackIsPlayed){
+      if (picture[i] !== blackIsPlayed){ //Vérification si erreur
         blackIsPlayed = !blackIsPlayed;
         futureErrors[i] = true;
       }
       setErrors(futureErrors);
 
+      //Affichage couleur
       const futureSquaresColor = squaresColor.slice();
       futureSquaresColor[i] = blackIsPlayed ? true : false;
       setSquaresColor(futureSquaresColor);
 
+      //Affichage contenu
       const futureSquaresState = squaresState.slice();
       futureSquaresState[i] = blackIsPlayed ? "B" : "X";
       setSquaresState(futureSquaresState);
@@ -217,8 +225,6 @@ function Game() {
             </div>
           </div>
 
-
-
           <div className="switch">
             <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
           </div>
@@ -228,21 +234,21 @@ function Game() {
   );
 }
 
-
-
 export default Game;
 
+//Comptage des valeurs des lignes/colonnes
 function getNumbers(futureNumbers, pic, size){
-  var count = 0;  
-  var values = [];
+  var count = 0;    //Compte des valeurs consécutives
+  var values = [];  //Liste des valeurs consécutives pour la ligne ou la colonne
 
   for (let i=0; i<Math.sqrt(size); i++){
+    //Parcours des lignes
     for (let j=i*Math.sqrt(size); j<(i*Math.sqrt(size)+Math.sqrt(size)); j++){
       if (pic[j]===true){
         count += 1;
       }
       else{
-        if (count != 0){      
+        if (count != 0){      //Interruption de la suite
           values.push(count);
           count = 0;
         }
@@ -255,12 +261,13 @@ function getNumbers(futureNumbers, pic, size){
     count = 0;
     values = [];
     
+    //Parcours des colonnes
     for (let j=i; j<size; j=j+Math.sqrt(size)){
       if (pic[j]===true){
         count += 1;
       }
       else{
-        if (count != 0){      
+        if (count != 0){      //Interruption de la suite  
           values.push(count);
           count = 0;
         }
@@ -273,5 +280,6 @@ function getNumbers(futureNumbers, pic, size){
     count = 0;
     values = [];
   };
-  return futureNumbers;
+
+  return futureNumbers;     //Retourne le tableau des listes des valeurs
 }
