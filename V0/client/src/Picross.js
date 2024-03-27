@@ -117,7 +117,7 @@ function Hearts ({ numErrors }) {
 
 
 function Game() {
-  const picture = [true,false,true,false,true,false,true,false,true];
+  const picture = [true,true,true,false,true,false,true,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
 
   
@@ -200,7 +200,7 @@ function Game() {
               </div>
               <div className="board-row">
                 {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
-                  <Square key={index} isBlack={false} state={number} />
+                  <Square key={index} isBlack={false} state={Array.isArray(number) ? number.join(' · ') : number} />
                 ))}
               </div>
             </div>
