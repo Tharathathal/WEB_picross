@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import lena from './images/Lena.png';
-
+//import lena from './images/Lena.png';
 
 //fonction qui extrait les pixels de l'image choisie
 function ImagePixelExtractor({ image }) { 
@@ -122,6 +121,7 @@ function DecoupageImageCarre({ image, taille}) {
         const blue = imageData.data[i + 2];
         const alpha = imageData.data[i + 3];
         const gray = (red + green + blue) / 3;
+        // On vérifie si la couleur est claire ou foncée
         if (gray > 128) {
           const color = `rgba(255, 255, 255, ${alpha})`;
           pixelColors.push(color);
@@ -150,6 +150,7 @@ function DecoupageImageCarre({ image, taille}) {
       }
       setDecoupage(Carre);
       console.log(Carre);
+      console.log(TrueFalse);
     }
     img.src = image;
   }
@@ -219,14 +220,32 @@ function BlackAndWhiteImage({ image }) {
     }
 
 export default function Lenna() {
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setSelectedImage(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  
     return (
       <div className="Image-Test">
-        <h1>Lenna</h1>
-        <img src={lena} alt={"Lenna"} />
-        <ImagePixelExtractor image={lena} />
-        <MoyenneCouleur image={lena} />
-        <DecoupageImageCarre image={lena} taille={20} />
-        <BlackAndWhiteImage image={lena} />
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      {selectedImage && <img src={selectedImage} alt="Selected" />}
+        <div className="Traitement-Image">
+          <h1>Lenna</h1>
+          <ImagePixelExtractor image={selectedImage} />
+          <MoyenneCouleur image={selectedImage} />
+          <DecoupageImageCarre image={selectedImage} taille={20} />
+          <BlackAndWhiteImage image={selectedImage} />
+        </div>
       </div>
     );
   }
