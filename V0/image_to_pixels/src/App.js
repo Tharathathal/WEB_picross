@@ -99,7 +99,53 @@ function MoyenneCouleur({ image }) {
   );
 }
 
-function DecoupageImageCarre({ image, taille }) {
+function MoyenneCouleurCarre({ listeCarre }) {
+  const [moyenne, setMoyenne] = useState([]);
+  const extractMoyenneCarre = () => {
+    const pixelColors = [];
+    const TrueFalse = [];
+    var red = 0;
+    var green = 0;
+    var blue = 0;
+    var gray = 0;
+    var alpha = 0;
+    // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
+    for (let i = 0; i < listeCarre.length; i++) {
+      for (let j = 0; j < listeCarre[i].length; j++) {
+        red += listeCarre[i][j];
+        green += listeCarre[i][j + 1];
+        blue += listeCarre[i][j + 2];
+        alpha += listeCarre[i][j + 3];
+      }
+      red = red / (listeCarre[i].length / 4);
+      green = green / (listeCarre[i].length / 4);
+      blue = blue / (listeCarre[i].length / 4);
+      alpha = alpha / (listeCarre[i].length / 4);
+      gray = (red + green + blue) / 3;
+      const color = `couleur_moyenne_rgba(${red}, ${green}, ${blue}, ${alpha})`;
+      if (gray > 128) {
+        TrueFalse.push(true);
+      } else {
+        TrueFalse.push(false);
+      }
+      pixelColors.push(color);
+    }
+    setMoyenne(pixelColors);
+    console.log(pixelColors, TrueFalse);
+  };
+  return (
+    <div>
+      <button onClick={extractMoyenneCarre}>Extraire la moyenne de couleur des carrés</button>
+      <div>
+        {moyenne.length > 0 && (
+          <p>Moyenne de couleur : {moyenne}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DecoupageImageCarre({ image, taille}) {
   const [decoupage, setDecoupage] = useState([]);
   const extractDecoupage = () => {
     const canvas = document.createElement('canvas');
@@ -112,6 +158,7 @@ function DecoupageImageCarre({ image, taille }) {
       context.drawImage(img, 0, 0, img.width, img.height);// On dessine l'image dans le canvas
       const imageData = context.getImageData(0, 0, img.width, img.height);// On récupère les données de l'image
       const pixelColors = [];
+      const TrueFalse = [];
 
       // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
       for (let i = 0; i < imageData.data.length; i += 4) {
@@ -120,8 +167,16 @@ function DecoupageImageCarre({ image, taille }) {
         const green = imageData.data[i + 1];
         const blue = imageData.data[i + 2];
         const alpha = imageData.data[i + 3];
-        const color = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
-        pixelColors.push(color);
+        const gray = (red + green + blue) / 3;
+        if (gray > 128) {
+          const color = `rgba(255, 255, 255, ${alpha})`;
+          pixelColors.push(color);
+          TrueFalse.push(true);
+        }else{
+          const color = `rgba(0, 0, 0, ${alpha})`;
+          pixelColors.push(color);
+          TrueFalse.push(false);
+        }
       }
       
       const pixelSquareColors = [];
@@ -130,17 +185,17 @@ function DecoupageImageCarre({ image, taille }) {
         pixelSquareColors.push(row);
       }
 
-      const listeCarre = [];
+      const Carre = [];
       for (let i = 0; i < pixelSquareColors.length; i += taille) {
         const square = [];
         for (let j = 0; j < pixelSquareColors[i].length; j += taille) {
           const row = pixelSquareColors[i].slice(j, j + taille);
           square.push(row);
         }
-        listeCarre.push(square);
+        Carre.push(square);
       }
-      setDecoupage(listeCarre);
-      console.log(listeCarre);
+      setDecoupage(Carre);
+      console.log(Carre);
     }
     img.src = image;
   }
@@ -216,9 +271,8 @@ export default function Lenna() {
         <img src={lena} alt={"Lenna"} />
         <ImagePixelExtractor image={lena} />
         <MoyenneCouleur image={lena} />
-        <DecoupageImageCarre image={lena} taille={1} />
+        <DecoupageImageCarre image={lena} taille={20} />
         <BlackAndWhiteImage image={lena} />
       </div>
     );
   }
-
