@@ -38,7 +38,7 @@ function SignupPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-box">
       <div className="container">
         <label>Create a username :</label>
         <input
@@ -66,7 +66,7 @@ function SignupPage() {
       <div className="container">
       {verif && (
       <>
-        <label>Let's discover your personnal space ~~~~~~~~~~~~~~~~~~~~</label>
+        <label>Let's discover your personnal space</label>
         <Link to={`/${username}`}><button className="loginButton">My user space</button></Link>
       </>
       )}

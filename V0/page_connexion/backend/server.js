@@ -110,6 +110,17 @@ app.post('/userspace', async (req, res) => {
   res.status(200).json({ date: createdAt.toLocaleDateString(), game : rep_game, score : rep_score });
 });
 
+//incrémenter nb de parties quand New Game
+app.post('/userspace0', async (req, res) => {
+  const { username } = req.body;
+  const user = await User.findOne({ username : username });
+
+  user.game += 1;
+
+  const updatedUser = await user.save();
+  res.json({ game: updatedUser.game });
+});
+
 
 // Démarrage du serveur
 app.listen(port, () => {

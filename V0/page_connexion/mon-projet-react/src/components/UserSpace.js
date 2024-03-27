@@ -7,6 +7,27 @@ function UserSpace() {
   const [game, setGame] = useState('');
   const [score, setScore] = useState('');
 
+  const handleClick = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/userspace0', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+
+      if (response.ok) {
+        const updatedData = await response.json();
+        setGame(updatedData.game);
+      } else {
+        console.error('Failed to increment game count');
+      }
+    } catch (error) {
+      console.error('Error incrementing game count:', error);
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,15 +57,19 @@ function UserSpace() {
 
   return (
     <>
+    <form className="form-box">
       <div className="container">
-        Bienvenue dans l'espace utilisateur de {username}!
+        <label>Welcome in the user space of {username}!</label>
         <div>You are among us since : {date}</div>
         <div>You made {game} games</div>
         <div>You cumulate {score} points</div>
       </div>
+      </form>
+      <form onClick={handleClick} className="form-box">
       <div className="container">
       <button className="loginButton">NEW GAME</button>
       </div>
+      </form>
     </>
   );
 }

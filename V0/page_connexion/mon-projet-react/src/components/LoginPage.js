@@ -46,7 +46,7 @@ function LoginPage() {
     );
   } else {
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-box">
         <div className="container">
           <label>Input your username :</label>
           <input
