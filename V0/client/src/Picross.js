@@ -195,8 +195,10 @@ function Game() {
         <>
           <div className="container">
             <div className="row-wrapper">
-              <div className="board-row">
+              <div className="corner">
                 <Square/>
+              </div>
+              <div className="board-row">
                 {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
                   <Square key={index} isBlack={false} state={number} />
                 ))}
@@ -220,7 +222,6 @@ function Game() {
             <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
           </div>
           <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
-          <p> {numbers.join("  ")} </p>
         </>
       )}
     </>
