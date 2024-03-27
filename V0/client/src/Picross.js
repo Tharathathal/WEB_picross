@@ -120,12 +120,14 @@ function Game() {
   const picture = [true,true,true,false,false,false,false,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
 
-  const [errors, setErrors] = useState(Array(9).fill(null));
+  
   const [size, setSize] = useState(9);
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));
 
   const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));
   const [squaresState, setSquaresState] = useState(Array(size).fill(null));
+
+  const [errors, setErrors] = useState(Array(size).fill(null));
   
   useEffect(() => {
     const futureNumbers = getNumbers(numbers.slice(), picture, size);
@@ -195,14 +197,14 @@ function Game() {
             <div className="row-wrapper">
               <div className="board-row">
                 <Square/>
-                {numbers.slice(3, 6).map((number, index) => (
+                {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
                   <Square key={index} isBlack={false} state={number} />
                 ))}
               </div>
             </div>
             <div className="board-wrapper">
               <div className="board-column">
-                {numbers.slice(0, 3).map((number, index) => (
+                {numbers.slice(0, numbers.length/2).map((number, index) => (
                   <Square key={index} isBlack={false} state={number} />
                 ))}
               </div>
