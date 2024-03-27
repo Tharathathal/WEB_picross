@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import './App.css';
 //import lena from './images/Lena.png';
 
@@ -123,7 +123,7 @@ function DecoupageImageCarre({ image, taille}) {
         const gray = (red + green + blue) / 3;
         // On vérifie si la couleur est claire ou foncée
         if (gray > 128) {
-          const color = `rgba(255, 255, 255, ${alpha})`;
+          const color = `rgba(128, 255, 255, ${alpha})`;
           pixelColors.push(color);
           TrueFalse.push(true);
         }else{
@@ -133,28 +133,71 @@ function DecoupageImageCarre({ image, taille}) {
         }
       }
       
-      const pixelSquareColors = [];
-      for (let i = 0; i < pixelColors.length; i += taille) {
-        const row = pixelColors.slice(i, i + taille);
-        pixelSquareColors.push(row);
+      var pixelSquareColors = [];
+      const carres = []
+      const carresVraiFaux = []
+      var TrueFalseSquare = [];
+      var compt = 0;
+
+      for (let i = 0; i < img.width; i += taille) {
+        for (let j = 0; j < pixelColors.length; j += img.width) {
+          compt++;
+          const row = pixelColors.slice(j, j + taille);
+          pixelSquareColors.push(row);
+          if (compt === taille){
+            carres.push(pixelSquareColors);
+            pixelSquareColors = [];
+            compt = 0;
+          }
+        }
+      }
+      console.log(carres);
+
+      for (let i = 0; i < img.width; i += taille) {
+        for (let j = 0; j < TrueFalse.length; j += img.width) {
+          compt++;
+          const row = TrueFalse.slice(j, j + taille);
+          TrueFalseSquare.push(row);
+          if (compt === taille){
+            carresVraiFaux.push(TrueFalseSquare);
+            TrueFalseSquare = [];
+            compt = 0;
+          }
+        }
       }
 
-      const Carre = [];
-      for (let i = 0; i < pixelSquareColors.length; i += taille) {
-        const square = [];
-        for (let j = 0; j < pixelSquareColors[i].length; j += taille) {
-          const row = pixelSquareColors[i].slice(j, j + taille);
-          square.push(row);
+      const moyenneTrueFalse = [];
+      for (let i = 0; i < carresVraiFaux.length; i++) {
+        var sommeVrai = 0;
+        var sommeFaux = 0;
+        for(let j = 0; j < carresVraiFaux[i].length; j++){
+          for(let k = 0; k < carresVraiFaux[i][j].length; k++){
+            if(carresVraiFaux[i][j][k] === true){
+              sommeVrai++;
+            }else{
+              sommeFaux++;
+            }
+          }
         }
-        Carre.push(square);
+        if(sommeVrai > sommeFaux){
+          moyenneTrueFalse.push(true);
+        }else{
+          moyenneTrueFalse.push(false);
+        }
       }
-      setDecoupage(Carre);
-      console.log(Carre);
-      console.log(TrueFalse);
+
+      setDecoupage(carres);
+      console.log(carres);
+      console.log(carresVraiFaux);
+      console.log(moyenneTrueFalse);
     }
     img.src = image;
   }
   
+  /*useEffect(() => {
+    extractDecoupage();
+  }, []);*/
+
   return (
     <div>
       <button onClick={extractDecoupage}>Découper l'image en carrés</button>
@@ -173,6 +216,98 @@ function DecoupageImageCarre({ image, taille}) {
       </div>
     </div>
   );
+}
+
+function TrueFalseFunc({ image, taille}) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const img = new Image();
+  img.crossOrigin = 'Anonymous';
+  img.onload = () => { 
+    canvas.width = img.width;
+    canvas.height = img.height;
+    context.drawImage(img, 0, 0, img.width, img.height);// On dessine l'image dans le canvas
+    const imageData = context.getImageData(0, 0, img.width, img.height);// On récupère les données de l'image
+    const pixelColors = [];
+    const TrueFalse = [];
+
+    // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      // Récupération des valeurs RGBA de chaque pixel
+      const red = imageData.data[i];
+      const green = imageData.data[i + 1];
+      const blue = imageData.data[i + 2];
+      const alpha = imageData.data[i + 3];
+      const gray = (red + green + blue) / 3;
+      // On vérifie si la couleur est claire ou foncée
+      if (gray > 128) {
+        const color = `rgba(128, 255, 255, ${alpha})`;
+        pixelColors.push(color);
+        TrueFalse.push(true);
+      }else{
+        const color = `rgba(0, 0, 0, ${alpha})`;
+        pixelColors.push(color);
+        TrueFalse.push(false);
+      }
+    }
+    
+    var pixelSquareColors = [];
+    const carres = []
+    const carresVraiFaux = []
+    var TrueFalseSquare = [];
+    var compt = 0;
+
+    for (let i = 0; i < img.width; i += taille) {
+      for (let j = 0; j < pixelColors.length; j += img.width) {
+        compt++;
+        const row = pixelColors.slice(j, j + taille);
+        pixelSquareColors.push(row);
+        if (compt === taille){
+          carres.push(pixelSquareColors);
+          pixelSquareColors = [];
+          compt = 0;
+        }
+      }
+    }
+    console.log(carres);
+
+    for (let i = 0; i < img.width; i += taille) {
+      for (let j = 0; j < TrueFalse.length; j += img.width) {
+        compt++;
+        const row = TrueFalse.slice(j, j + taille);
+        TrueFalseSquare.push(row);
+        if (compt === taille){
+          carresVraiFaux.push(TrueFalseSquare);
+          TrueFalseSquare = [];
+          compt = 0;
+        }
+      }
+    }
+
+    const moyenneTrueFalse = [];
+    for (let i = 0; i < carresVraiFaux.length; i++) {
+      var sommeVrai = 0;
+      var sommeFaux = 0;
+      for(let j = 0; j < carresVraiFaux[i].length; j++){
+        for(let k = 0; k < carresVraiFaux[i][j].length; k++){
+          if(carresVraiFaux[i][j][k] === true){
+            sommeVrai++;
+          }else{
+            sommeFaux++;
+          }
+        }
+      }
+      if(sommeVrai > sommeFaux){
+        moyenneTrueFalse.push(true);
+      }else{
+        moyenneTrueFalse.push(false);
+      }
+    }
+    console.log(carres);
+    console.log(carresVraiFaux);
+    console.log(moyenneTrueFalse);
+  }
+  img.src = image;
 }
 
 function BlackAndWhiteImage({ image }) {
@@ -234,7 +369,7 @@ export default function Lenna() {
       reader.readAsDataURL(file);
     }
   };
-  
+
     return (
       <div className="Image-Test">
       <input type="file" accept="image/*" onChange={handleImageUpload} />
