@@ -137,11 +137,13 @@
   }
 
   .board-column .square{
+    background: rgb(225, 225, 225);
     font-size: 15px;
     font-family: sans-serif;
   }
   
-  .row-wrapper .square{
+  .row-wrapper .board-row .square{
+    background: rgb(225, 225, 225);
     font-size: 15px;
     font-family: sans-serif;
   }
