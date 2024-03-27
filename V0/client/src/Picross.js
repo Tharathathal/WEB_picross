@@ -147,7 +147,15 @@ function Game() {
       endgame = true;
       win = false;
     } else {
-      endgame = squaresColor.every((e)=>e!==null);
+      
+      endgame = true;
+      
+      for (let i = 0; i<squaresColor.length;i++) {
+        if (picture[i]&&!squaresColor[i]){
+          endgame = false;
+        }
+      }
+      
       if (endgame) {
         win = true;
       }
