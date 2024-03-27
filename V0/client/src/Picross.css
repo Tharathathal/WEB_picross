@@ -1,0 +1,172 @@
+* {
+    box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'Mighty-Souly';
+    src: local('Mighty-Souly'), url(./fonts/MightySouly-lxggD.ttf) format('truetype');
+  }
+  
+  body {
+    font-family: sans-serif;
+    margin: 20px;
+    padding: 0;
+    color : #19115e;
+    text-align: center;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-family: Mighty-Souly;
+    font-size: 60px;
+    color: #f37f1c;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-top: 0;
+    font-family: Mighty-Souly;
+    font-size: 60px;
+    color:crimson;
+  }
+  
+  h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+  
+  h4 {
+    margin-top: 0;
+    font-size: 16px;
+  }
+  
+  h5 {
+    margin-top: 0;
+    font-size: 14px;
+  }
+  
+  h6 {
+    margin-top: 0;
+    font-size: 12px;
+  }
+  
+  code {
+    font-size: 1.2em;
+  }
+  
+  ul {
+    padding-inline-start: 20px;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    margin: 20px;
+    padding: 0;
+    color : #f37f1c;
+  }
+  
+  .square {
+    background: #fff;
+    border: 1px solid black;
+    float: left;
+    font-family: Mighty-Souly;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 70px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 70px;
+  }
+  
+  .black {
+    background-color: #000;
+  }
+
+  .red{
+    background-color: crimson;
+    color :crimson;
+  }
+  
+  .redx{
+    color : crimson;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  
+  .board-wrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .row-wrapper {
+    display: flex;
+  }
+  
+  .board-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .board-row {
+    display: flex;
+  }
+  
+  .corner {
+    display: flex;
+  }
+
+  .corner .square {
+    border-top: 0px;
+    border-left: 0px;
+  }
+
+  .board-column .square{
+    background: rgb(225, 225, 225);
+    font-size: 15px;
+    font-family: sans-serif;
+  }
+  
+  .row-wrapper .board-row .square{
+    background: rgb(225, 225, 225);
+    font-size: 15px;
+    font-family: sans-serif;
+  }
+  
+  .status {
+    margin-bottom: 10px;
+  }
+  .game {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .game-info {
+    margin-left: 20px;
+  }
+
+  .errors {
+    margin-left: 20px;
+    color: #ef2f22;
+  }
+  
+  .heart {
+    margin-top: 10px;
+    margin-left: 140px;
+    font-size: 25px;
+  }
