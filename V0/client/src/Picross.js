@@ -117,7 +117,7 @@ function Hearts ({ numErrors }) {
 
 
 function Game() {
-  const picture = [true,false,true,false,false,false,false,false,false];
+  const picture = [true,false,true,false,true,false,true,false,true];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);
 
   
