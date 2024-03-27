@@ -8,6 +8,7 @@ mongoose.connect('mongodb://localhost:27017/WEB')
   .catch(err => console.error('Erreur de connexion à MongoDB', err));
 
 
+// définition du schema dans la BDD
 const userSchema = new mongoose.Schema({
     username: { type: String },
     password: { type: String },
@@ -17,65 +18,46 @@ const userSchema = new mongoose.Schema({
     timestamps: { createdAt: true, updatedAt: false }
   });
 
-// Méthodes du schéma pour récup infos utilisateur -- A placer avant model !!
-userSchema.methods.getId = function () {
-    return this._id;
-}
-
-userSchema.methods.getPassword = function() {
-    return this.password;
-}
-
-userSchema.methods.getGame = function () {
-    return this.game;
-}
-
-userSchema.methods.getScore = function () {
-    return this.score;
-}
-
-userSchema.methods.getDate = function () {
-  return this.createdAt;
-}
-
 // Création du modèle User basé sur le schéma
 const User = mongoose.model('User', userSchema, 'Users'); // (nom du modèle, schéma, nom de la collection (opt))
 
 
+
+//instance express --> gère les routes/requêtes http 
 const app = express();
 const port = 5000;
 
+//autorise les requêtes cross-origin
 app.use(cors());
+//les requêtes sont en json
 app.use(express.json());
 
-//gérer les requêtes POST à `/login`
+// gérer les requêtes à /login 
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  console.log(`Try to connect to ${username}`)
+  const { username, password } = req.body; // réception
   let response;
   const user = await User.findOne({ username : username });
   if (!user) {
-    response = "nothing";
+    response = "nothing"; // si utilisateur introuvable
   } else {
-    const real_password = user.getPassword();
+    const real_password = user.password;
     if (real_password == password) {
-      response = "yes"
+      response = "yes" // si mdp convient
     } else {
-      response = "no"
+      response = "no" // si mauvais mdp
     }
   }
-  // Répondre au client
+  // Réponse
   res.status(200).json({ message: response });
 });
 
 //gérer les requêtes POST à `/signup`
 app.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
-  console.log(`Try to create an account : ${username}`)
+  const { username, password } = req.body; // réception
   let response;
   const user = await User.findOne({ username : username });
   if (user != null) {
-    response = "change";
+    response = "change"; // si username déjà pris
   } else {
     const newUser = new User({
       username: username,
@@ -120,6 +102,7 @@ app.post('/userspace0', async (req, res) => {
   const updatedUser = await user.save();
   res.json({ game: updatedUser.game });
 });
+
 
 
 // Démarrage du serveur
