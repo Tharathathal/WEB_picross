@@ -2,7 +2,10 @@
 
 ## Prérequis
 
-Il faut posséder MongoDB et créer une BDD "à la main" pour simuler une base d'utilisateur ou inscrire des joueurs. Il faut télécharger :
+Il faut posséder MongoDB. Pour un test optimal du projet, nous conseillons d'importer une base de donnée dans "WEB.Users.json". Pour cela, télécharger l'outil en ligne de commande "mongoimport" qui fait partie des MongoDB Database Tools : https://www.mongodb.com/try/download/database-tools 
+Puis exécuter : "mongoimport --db WEB --collection users --file ./WEB.Users.json --jsonArray", ce qui créera une bdd "WEB". Celle-ci comporte des utilisateurs (ainsi que leurs informations).
+
+Il faut télécharger :
 - Côté serveur : 
   - Mongoose (API MongoDB) : `npm install mongoose`
   - Express (Framework pour Node.js) : `npm install express`

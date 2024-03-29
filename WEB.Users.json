@@ -1,0 +1,91 @@
+[{
+  "_id": {
+    "$oid": "65fa91d9e478bee866bbe964"
+  },
+  "username": "Golmon69",
+  "password": "mdp69",
+  "game": 18,
+  "score": 33,
+  "createdAt": {
+    "$date": "2024-03-20T07:35:53.795Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65fa961a65f8db91c9683c92"
+  },
+  "username": "Zeus",
+  "password": "mdpzeus",
+  "game": 1,
+  "score": 131,
+  "createdAt": {
+    "$date": "2024-03-20T07:54:02.123Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6603d6afc03264b44c04ab59"
+  },
+  "username": "Batman",
+  "password": "robin",
+  "game": 1,
+  "score": 0,
+  "createdAt": {
+    "$date": "2024-03-27T08:19:59.924Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6603d96fc44901a0a4f48675"
+  },
+  "username": "Loki",
+  "password": "mdploki",
+  "game": 0,
+  "score": 0,
+  "createdAt": {
+    "$date": "2024-03-27T08:31:43.538Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6603e74dc44901a0a4f4867d"
+  },
+  "username": "Goat",
+  "password": "mdpgoat",
+  "game": 0,
+  "score": 0,
+  "createdAt": {
+    "$date": "2024-03-27T09:30:53.999Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6603eabbc44901a0a4f48689"
+  },
+  "username": "Fraise69",
+  "password": "mdpfraise",
+  "game": 12,
+  "score": 0,
+  "createdAt": {
+    "$date": "2024-03-27T09:45:31.580Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6603eb28c44901a0a4f4868e"
+  },
+  "username": "Banane69",
+  "password": "mdp69",
+  "game": 0,
+  "score": 0,
+  "createdAt": {
+    "$date": "2024-03-27T09:47:20.130Z"
+  },
+  "__v": 0
+}]
