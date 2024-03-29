@@ -17,6 +17,8 @@ Mettre le serveur sur écoute  : `node server.js`
 
 Dans un autre terminal, lancer le projet react : `npm start`
 
+Pour commencer une partie, il faut se connecter ou créer un compte utilisateur. Il faut ensuite choisir la difficulté et importer son image pour générer son Picross.
+
 ## Règles du jeu
 
 L'objectif est de noircir les cases d'une grille pour former une image.
