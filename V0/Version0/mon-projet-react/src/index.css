@@ -18,6 +18,8 @@ code {
   align-items: center; /* Centre verticalement dans le conteneur */
   /* height: 20vh; à mettre si on veut pour taille du conteneur */
   flex-direction: column; /* Organise les éléments en colonne */
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .loginButton {

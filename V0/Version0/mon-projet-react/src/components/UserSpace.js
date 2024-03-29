@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UserSpace() {
   let { username } = useParams(); // Accès au paramètre dynamique
@@ -67,7 +68,7 @@ function UserSpace() {
       </form>
       <form onClick={handleClick} className="form-box">
       <div className="container">
-      <button className="loginButton">NEW GAME</button>
+      <Link to="/play"><button className="loginButton">NEW GAME</button></Link>
       </div>
       </form>
     </>

@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import UserSpace from "./components/UserSpace";
+import Picross from "./components/Picross";
 
 //route dynamique pour le UserSpace
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/:username" element={<UserSpace />} />   
+        <Route path="/:username" element={<UserSpace />} />
+        <Route path="/play" element={<Picross />} />
       </Routes>
     </Router>
   );
