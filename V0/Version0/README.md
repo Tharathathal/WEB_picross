@@ -1,6 +1,8 @@
 Prérequis :
-    -Posséder MongoDB + (créer une BDD "à la main" pour simuler une base d'utilisateur ou inscrire des joueurs)
-    -A téléchargé : 
+
+    Posséder MongoDB + (créer une BDD "à la main" pour simuler une base d'utilisateur ou inscrire des joueurs)
+    
+    A téléchargé : 
         Côté serveur : 
             Mongoose (API MongoDB) : "npm install mongoose"
             Express (Framework pour Node.js) : "npm install express"
@@ -10,6 +12,8 @@ Prérequis :
 
 
 Lancer l'appli : 
+
     Mettre le serveur sur écoute : "node server.js"
+    
     Dans un autre terminal, lancer le projet react : "npm start"
 
