@@ -123,44 +123,39 @@ function Hearts ({ numErrors }) {
 function Game() {
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);     //Booléen correspondant à l'action
   
-  const [size, setSize] = useState(0);    //Taille du plateau
+  const [size, setSize] = useState(9);    //Taille du plateau
   const [picture, setPicture] = useState(Array(size).fill(null));   //Tableau des valeurs de la photo
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));    //Tableau des valeurs de carrés consécutifs
 
   const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));   //Etat de la couleur des carrés (noir ou rouge)
   const [squaresState, setSquaresState] = useState(Array(size).fill(null));   //Etat du contenu des carrés (plein ou X)
 
-  const [errors, setErrors] = useState(Array(size).fill(null));      //Tableau des erreurs   
-  
-  //Update des variables avec quand size est défini
-  useEffect(() => {
-    setPicture(Array(size).fill(null));
-    setSquaresColor(Array(size).fill(null));
-    setSquaresState(Array(size).fill(null));
-    setErrors(Array(size).fill(null));
-    setNumbers(Array(2 * Math.sqrt(size)).fill(null));
-  }, [size]);
+  const [errors, setErrors] = useState(Array(size).fill(null));      //Tableau des erreurs           
   
   //Détermine les valeurs de carrés consécutifs
   useEffect(() => {
     const futureNumbers = getNumbers(numbers.slice(), picture, size);
     setNumbers(futureNumbers);
-  }, [size]);
+  }, [picture]);
 
   //Vérifie si victoire ou défaite
   const checkEndgame = () => {
     let endgame,win;
+    
     const numErrors = errors.reduce((acc,curr)=>acc+ (curr ? 1:0),0);
     if (numErrors > 4) {
       endgame = true;
       win = false;
     } else {
+      
       endgame = true;
+      
       for (let i = 0; i<squaresColor.length;i++) {
         if (picture[i]&&!squaresColor[i]){
           endgame = false;
         }
       }
+      
       if (endgame) {
         win = true;
       }
@@ -170,15 +165,15 @@ function Game() {
 
   const {endgame,win} = checkEndgame();
 
+  //Vérifie si les paramètres de lancement de jeu sont définis
+  const checkParam = () => {
+    return size !== 0 && picture.every(item => item !== null);
+  }
+
   //Définit l'état du booléen d'action
   const handleSwitchChange = () => {
     setBlackIsPlayed(!blackIsPlayed);
   };
-
-  //Vérifie si les paramètres de lancement de jeu sont définis
- const checkParam = () => {
-    return size !== 0 && picture.every(item => item !== null);
-  }
 
   //Gestion du click sur un carré
   const handleClick = (i) => {
@@ -205,21 +200,20 @@ function Game() {
   
   return (
     <>
-    {!checkParam() ?(
-      <>
-      <h1>Picross</h1>
-      <GetParam setSize={setSize} setPicture={setPicture}/>
-      </>
-    ):(
+      {!checkParam() ?(
+        <>
+        <h1>Picross</h1>
+        <GetParam setSize={setSize} setPicture={setPicture} setSquaresColor={setSquaresColor} setSquaresState={setSquaresState} setErrors={setErrors} setNumbers={setNumbers}/>
+        </>
+      ):(
       <>
         <h1> Picross </h1>
         {endgame ? (
           <div>
-            {win ? <h2> You won !   </h2> : <h2> Game over </h2>}
+            {win ? <h2> You won ! </h2> : <h2> Game over </h2>}
           </div>
         ) : (
           <>
-          <form className='form-box'>
             <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
             <div className="container">
               <div className="row-wrapper">
@@ -247,12 +241,9 @@ function Game() {
             <div className="switch">
               <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
             </div>
-            </form>
           </>
         )}
-      </>
-      )
-    }
+      </>)}
     </>
   );
 }
