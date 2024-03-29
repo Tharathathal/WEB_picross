@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import LoginPage from "./components/LoginPage";
-import SignupPage from "./components/SignupPage";
-import UserSpace from "./components/UserSpace";
-import Picross from "./components/Picross";
+import HomePage from "./componentsV0V0/HomePage";
+import LoginPage from "./componentsV0/LoginPage";
+import SignupPage from "./componentsV0/SignupPage";
+import UserSpace from "./componentsV0/UserSpace";
+import Picross from "./componentsV0/Picross";
 
 //route dynamique pour le UserSpace
 function App() {

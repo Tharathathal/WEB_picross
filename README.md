@@ -17,6 +17,8 @@ Mettre le serveur sur écoute  : `node server.js`
 
 Dans un autre terminal, lancer le projet react : `npm start`
 
+Dans `Picross/mon-projet-react/src/App.js`, remplacer toutes les instances de *componentsV0* par *componentsV1* pour jouer avec la fonctionnalité d'import d'images. Sinon, le jeu générera une grille aléatoirement.
+
 Pour commencer une partie, il faut se connecter ou créer un compte utilisateur. Il faut ensuite choisir la difficulté et importer son image pour générer un Picross.
 
 ## Règles du jeu
