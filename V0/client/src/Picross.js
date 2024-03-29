@@ -134,7 +134,6 @@ function Game() {
   
   //Update des variables avec quand size est défini
   useEffect(() => {
-    setPicture(Array(size).fill(null));
     setSquaresColor(Array(size).fill(null));
     setSquaresState(Array(size).fill(null));
     setErrors(Array(size).fill(null));
