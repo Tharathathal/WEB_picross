@@ -1,6 +1,5 @@
 Prérequis :
     -Posséder MongoDB + (créer une BDD "à la main" pour simuler une base d'utilisateur ou inscrire des joueurs)
-    
     -A téléchargé : 
         Côté serveur : 
             Mongoose (API MongoDB) : "npm install mongoose"
