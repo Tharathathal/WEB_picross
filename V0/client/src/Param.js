@@ -46,9 +46,15 @@ function UploadPicture({ setPicture, size }) {
 
     reader.onload = () => {
       setSelectedImage(reader.result);
-      var l = TrueFalseFunc({ image: reader.result, taille: size })
-      console.log(l);
-      setPicture(l);
+      TrueFalseFunc({ image: reader.result, taille: size })
+      .then(result => {
+        console.log('Résultat :', result);
+        setPicture(result);
+      })
+      .catch(error => {
+        console.error('Erreur :', error);
+      });
+    
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -63,93 +69,93 @@ function UploadPicture({ setPicture, size }) {
   );
 }
 
-function TrueFalseFunc({ image, taille}) {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  const img = new Image();
-  img.crossOrigin = 'Anonymous';
-  img.src = image; 
-  canvas.width = img.width;
-  canvas.height = img.height;
-  context.drawImage(img, 0, 0, img.width, img.height);// On dessine l'image dans le canvas
-  const imageData = context.getImageData(0, 0, img.width, img.height);// On récupère les données de l'image
-  const pixelColors = [];
-  const TrueFalse = [];
 
-  // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
-  for (let i = 0; i < imageData.data.length; i += 4) {
-    // Récupération des valeurs RGBA de chaque pixel
-    const red = imageData.data[i];
-    const green = imageData.data[i + 1];
-    const blue = imageData.data[i + 2];
-    const alpha = imageData.data[i + 3];
-    const gray = (red + green + blue) / 3;
-    // On vérifie si la couleur est claire ou foncée
-    if (gray > 100) {
-      const color = `rgba(255, 255, 255, ${alpha})`;
-      pixelColors.push(color);
-      TrueFalse.push(true);
-    }else{
-      const color = `rgba(0, 0, 0, ${alpha})`;
-      pixelColors.push(color);
-      TrueFalse.push(false);
-    }
-  }
-  
-  taille = Math.trunc(Math.sqrt(pixelColors.length/taille));
-  console.log(taille);
+function TrueFalseFunc({ image, taille }) {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.src = image;
+    var truc = [];
 
-  var pixelSquareColors = [];
-  const carres = []
-  const carresVraiFaux = []
-  var TrueFalseSquare = [];
-  var compt = 0;
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      context.drawImage(img, 0, 0, img.width, img.height); // On dessine l'image dans le canvas
+      const imageData = context.getImageData(0, 0, img.width, img.height); // On récupère les données de l'image
+      const pixelColors = [];
+      const TrueFalse = [];
 
-  for (let i = 0; i < img.width; i += taille) {
-    for (let j = 0; j < pixelColors.length; j += img.width) {
-      compt++;
-      const row = pixelColors.slice(j, j + taille);
-      pixelSquareColors.push(row);
-      if (compt === taille){
-        carres.push(pixelSquareColors);
-        pixelSquareColors = [];
-        compt = 0;
-      }
-    }
-  }
-
-  for (let i = 0; i < img.width; i += taille) {
-    for (let j = 0; j < TrueFalse.length; j += img.width) {
-      compt++;
-      const row = TrueFalse.slice(j, j + taille);
-      TrueFalseSquare.push(row);
-      if (compt === taille){
-        carresVraiFaux.push(TrueFalseSquare);
-        TrueFalseSquare = [];
-        compt = 0;
-      }
-    }
-  }
-  const moyenneTrueFalse = [];
-  for (let i = 0; i < carresVraiFaux.length; i++) {
-    var sommeVrai = 0;
-    var sommeFaux = 0;
-    for(let j = 0; j < carresVraiFaux[i].length; j++){
-      for(let k = 0; k < carresVraiFaux[i][j].length; k++){
-        if(carresVraiFaux[i][j][k] === true){
-          sommeVrai++;
-        }else{
-          sommeFaux++;
+      // Parcours de tous les pixels de l'image et récupération de leur couleur en gamme RGBA
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        // Récupération des valeurs RGBA de chaque pixel
+        const red = imageData.data[i];
+        const green = imageData.data[i + 1];
+        const blue = imageData.data[i + 2];
+        const alpha = imageData.data[i + 3];
+        const gray = (red + green + blue) / 3;
+        // On vérifie si la couleur est claire ou foncée
+        if (gray > 100) {
+          const color = `rgba(255, 255, 255, ${alpha})`;
+          pixelColors.push(color);
+          TrueFalse.push(true);
+        } else {
+          const color = `rgba(0, 0, 0, ${alpha})`;
+          pixelColors.push(color);
+          TrueFalse.push(false);
         }
       }
-    }
-    if(sommeVrai > sommeFaux){
-      moyenneTrueFalse.push(true);
-    }else{
-      moyenneTrueFalse.push(false);
-    }
-  }
-  return moyenneTrueFalse;
+
+      taille = Math.trunc(Math.sqrt(pixelColors.length / taille));
+      console.log(taille);
+
+      const carresVraiFaux = [];
+      var TrueFalseSquare = [];
+      var compt = 0;
+
+      for (let i = 0; i < img.width; i += taille) {
+        for (let j = 0; j < TrueFalse.length; j += img.width) {
+          compt++;
+          const row = TrueFalse.slice(j, j + taille);
+          TrueFalseSquare.push(row);
+          if (compt === taille) {
+            carresVraiFaux.push(TrueFalseSquare);
+            TrueFalseSquare = [];
+            compt = 0;
+          }
+        }
+      }
+      console.log(carresVraiFaux);
+
+      const moyenneTrueFalse = [];
+      for (let i = 0; i < carresVraiFaux.length; i++) {
+        var sommeVrai = 0;
+        var sommeFaux = 0;
+        for (let j = 0; j < carresVraiFaux[i].length; j++) {
+          for (let k = 0; k < carresVraiFaux[i][j].length; k++) {
+            if (carresVraiFaux[i][j][k] === true) {
+              sommeVrai++;
+            } else {
+              sommeFaux++;
+            }
+          }
+        }
+        if (sommeVrai > sommeFaux) {
+          moyenneTrueFalse.push(true);
+        } else {
+          moyenneTrueFalse.push(false);
+        }
+      }
+      truc.push(moyenneTrueFalse);
+      truc = truc[0];
+      console.log(truc);
+      resolve(truc);
+    };
+
+    img.onerror = (error) => {
+      reject(error);
+    };
+  });
 }
-  
 
