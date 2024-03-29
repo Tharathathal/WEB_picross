@@ -2,9 +2,20 @@
 
 ## Prérequis
 
-Il faut d'abord installer la librairie MUI pour pouvoir afficher les composants : `npm install @mui/material @emotion/react @emotion/styled`
+Il faut posséder MongoDB et créer une BDD "à la main" pour simuler une base d'utilisateur ou inscrire des joueurs. Il faut télécharger :
+- Côté serveur : 
+  - Mongoose (API MongoDB) : `npm install mongoose`
+  - Express (Framework pour Node.js) : `npm install express`
+  - CORS (Package qui permet le Cross-Origin Resource Sharing) : `npm install cors`
+- Côté du projet React : `npm install react-router-dom`
+
+Il faut installer la librairie MUI pour pouvoir afficher les composants : `npm install @mui/material @emotion/react @emotion/styled`
 
 ## Démarrage du jeu
+
+Mettre le serveur sur écoute  : `node server.js`
+
+Dans un autre terminal, lancer le projet react : `npm start`
 
 ## Règles du jeu
 
