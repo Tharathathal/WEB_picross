@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch' ;
 import { styled } from '@mui/material/styles'
+import GetParam from './Param';
 
 //Parametrage du switch
 const MySwitch = styled(Switch)(({ theme }) => ({
@@ -120,10 +121,10 @@ function Hearts ({ numErrors }) {
 
 //Gestion du jeu global
 function Game() {
-  const picture = [true,true,true,false,true,false,true,false,false];
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);     //Booléen correspondant à l'action
   
   const [size, setSize] = useState(9);    //Taille du plateau
+  const [picture, setPicture] = useState(Array(size).fill(null));   //Tableau des valeurs de la photo
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));    //Tableau des valeurs de carrés consécutifs
 
   const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));   //Etat de la couleur des carrés (noir ou rouge)
@@ -135,7 +136,7 @@ function Game() {
   useEffect(() => {
     const futureNumbers = getNumbers(numbers.slice(), picture, size);
     setNumbers(futureNumbers);
-  }, []);
+  }, [picture]);
 
   //Vérifie si victoire ou défaite
   const checkEndgame = () => {
@@ -163,6 +164,11 @@ function Game() {
   }
 
   const {endgame,win} = checkEndgame();
+
+  //Vérifie si les paramètres de lancement de jeu sont définis
+  const checkParam = () => {
+    return size !== 0 && picture.every(item => item !== null);
+  }
 
   //Définit l'état du booléen d'action
   const handleSwitchChange = () => {
@@ -194,44 +200,50 @@ function Game() {
   
   return (
     <>
-      <h1> Picross </h1>
-      {endgame ? (
-        <div>
-          {win ? <h2> You won ! </h2> : <h2> Game over </h2>}
-        </div>
-      ) : (
+      {!checkParam() ?(
         <>
-        <form className="form-box">
-          <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
-          <div className="container">
-            <div className="row-wrapper">
-              <div className="corner">
-                <Square/>
-              </div>
-              <div className="board-row">
-                {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
-                  <Square key={index} isBlack={false} state={Array.isArray(number) ? number.join(' · ') : number} />
-                ))}
-              </div>
-            </div>
-            <div className="board-wrapper">
-              <div className="board-column">
-                {numbers.slice(0, numbers.length/2).map((number, index) => (
-                  <Square key={index} isBlack={false} state={Array.isArray(number) ? number.join(' · ') : number} />
-                ))}
-              </div>
-              <div className="board">
-                <Board size={Math.sqrt(size)} squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
-              </div>
-            </div>
-          </div>
-
-          <div className="switch">
-            <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
-          </div>
-        </form>
+        <h1>Picross</h1>
+        <GetParam setSize={setSize} setPicture={setPicture} setSquaresColor={setSquaresColor} setSquaresState={setSquaresState} setErrors={setErrors} setNumbers={setNumbers}/>
         </>
-      )}
+      ):(
+      <>
+        <h1> Picross </h1>
+        {endgame ? (
+          <div>
+            {win ? <h2> You won ! </h2> : <h2> Game over </h2>}
+          </div>
+        ) : (
+          <>
+            <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
+            <div className="container">
+              <div className="row-wrapper">
+                <div className="corner">
+                  <Square/>
+                </div>
+                <div className="board-row">
+                  {numbers.slice(numbers.length/2, numbers.length).map((number, index) => (
+                    <Square key={index} isBlack={false} state={Array.isArray(number) ? number.join(' · ') : number} />
+                  ))}
+                </div>
+              </div>
+              <div className="board-wrapper">
+                <div className="board-column">
+                  {numbers.slice(0, numbers.length/2).map((number, index) => (
+                    <Square key={index} isBlack={false} state={Array.isArray(number) ? number.join(' · ') : number} />
+                  ))}
+                </div>
+                <div className="board">
+                  <Board size={Math.sqrt(size)} squaresColor={squaresColor} squaresState={squaresState} errors={errors} handleClick={handleClick} />
+                </div>
+              </div>
+            </div>
+
+            <div className="switch">
+              <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
+            </div>
+          </>
+        )}
+      </>)}
     </>
   );
 }
@@ -250,13 +262,13 @@ function getNumbers(futureNumbers, pic, size){
         count += 1;
       }
       else{
-        if (count != 0){      //Interruption de la suite
+        if (count !== 0){      //Interruption de la suite
           values.push(count);
           count = 0;
         }
       }
     }   
-    if (values.length == 0 || count!=0){
+    if (values.length === 0 || count!==0){
       values.push(count);
     } 
     futureNumbers[i] = values;
@@ -269,13 +281,13 @@ function getNumbers(futureNumbers, pic, size){
         count += 1;
       }
       else{
-        if (count != 0){      //Interruption de la suite  
+        if (count !== 0){      //Interruption de la suite  
           values.push(count);
           count = 0;
         }
       }
     }
-    if (values.length == 0 || count!=0){
+    if (values.length === 0 || count!==0){
       values.push(count);
     }    
     futureNumbers[i+Math.sqrt(size)] = values;

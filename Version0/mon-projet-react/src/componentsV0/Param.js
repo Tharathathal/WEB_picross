@@ -31,9 +31,6 @@ function GetParam({ setSize, setPicture, setSquaresColor, setSquaresState, setEr
             </RadioGroup>
             </FormControl>
         <br />
-        <label>
-          Upload Picture:
-        </label>
       </div>
     );
   }
