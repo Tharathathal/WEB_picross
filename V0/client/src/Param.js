@@ -7,6 +7,7 @@ function GetParam({ setSize, setPicture }) {
     const handleChange = (event) => {
         setValue(event.target.value); // Update the state with the selected value
         setSize(parseInt(event.target.value)); // Convert the selected value to an integer and set the size
+        setPicture([true, true, true, false, true, false, true, false, false]);
       }
 
     return (

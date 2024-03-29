@@ -121,22 +121,30 @@ function Hearts ({ numErrors }) {
 
 //Gestion du jeu global
 function Game() {
-  const [picture, setPicture] = useState([true, true, true, false, true, false, true, false, false]);
   var [blackIsPlayed, setBlackIsPlayed] = useState(true);     //Booléen correspondant à l'action
   
   const [size, setSize] = useState(0);    //Taille du plateau
+  const [picture, setPicture] = useState(Array(size).fill(null));   //Tableau des valeurs de la photo
   const [numbers, setNumbers] = useState(Array(2*Math.sqrt(size)).fill(null));    //Tableau des valeurs de carrés consécutifs
 
   const [squaresColor, setSquaresColor] = useState(Array(size).fill(null));   //Etat de la couleur des carrés (noir ou rouge)
   const [squaresState, setSquaresState] = useState(Array(size).fill(null));   //Etat du contenu des carrés (plein ou X)
 
-  const [errors, setErrors] = useState(Array(size).fill(null));      //Tableau des erreurs           
+  const [errors, setErrors] = useState(Array(size).fill(null));      //Tableau des erreurs   
+  
+  //Update des variables avec quand size est défini
+  useEffect(() => {
+    setSquaresColor(Array(size).fill(null));
+    setSquaresState(Array(size).fill(null));
+    setErrors(Array(size).fill(null));
+    setNumbers(Array(2 * Math.sqrt(size)).fill(null));
+  }, [size]);
   
   //Détermine les valeurs de carrés consécutifs
   useEffect(() => {
     const futureNumbers = getNumbers(numbers.slice(), picture, size);
     setNumbers(futureNumbers);
-  }, []);
+  }, [size]);
 
   //Vérifie si victoire ou défaite
   const checkEndgame = () => {
@@ -176,7 +184,7 @@ function Game() {
     if (squaresState[i] == null) {
       const futureErrors = errors.slice();
       futureErrors[i] = false;
-      if (picture[i] != blackIsPlayed){ //Vérification si erreur
+      if (picture[i] !== blackIsPlayed){ //Vérification si erreur
         blackIsPlayed = !blackIsPlayed;
         futureErrors[i] = true;
       }
@@ -206,7 +214,7 @@ function Game() {
         <h1> Picross </h1>
         {endgame ? (
           <div>
-            {win ? <h2> You won ! </h2> : <h2> Game over </h2>}
+            {win ? <h2> You won !   </h2> : <h2> Game over </h2>}
           </div>
         ) : (
           <>
@@ -260,13 +268,13 @@ function getNumbers(futureNumbers, pic, size){
         count += 1;
       }
       else{
-        if (count != 0){      //Interruption de la suite
+        if (count !== 0){      //Interruption de la suite
           values.push(count);
           count = 0;
         }
       }
     }   
-    if (values.length == 0 || count!=0){
+    if (values.length === 0 || count!==0){
       values.push(count);
     } 
     futureNumbers[i] = values;
@@ -279,13 +287,13 @@ function getNumbers(futureNumbers, pic, size){
         count += 1;
       }
       else{
-        if (count != 0){      //Interruption de la suite  
+        if (count !== 0){      //Interruption de la suite  
           values.push(count);
           count = 0;
         }
       }
     }
-    if (values.length == 0 || count!=0){
+    if (values.length === 0 || count!==0){
       values.push(count);
     }    
     futureNumbers[i+Math.sqrt(size)] = values;
