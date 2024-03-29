@@ -167,18 +167,6 @@ body {
 
 .heart {
   margin-top: 10px;
-  margin-left: 500px;
+  margin-left: 140px;
   font-size: 25px;
-}
-
-.form-box {
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 800px;
-  margin: auto;
-  background: white;
-  border-radius: 8px;
-  margin-top: auto; 
-  margin-bottom: auto;
 }
