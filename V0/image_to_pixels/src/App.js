@@ -241,7 +241,7 @@ function TrueFalseFunc({ image, taille}) {
       const gray = (red + green + blue) / 3;
       // On vérifie si la couleur est claire ou foncée
       if (gray > 128) {
-        const color = `rgba(128, 255, 255, ${alpha})`;
+        const color = `rgba(155, 255, 255, ${alpha})`;
         pixelColors.push(color);
         TrueFalse.push(true);
       }else{
@@ -384,3 +384,18 @@ export default function Lenna() {
       </div>
     );
   }
+
+function UploadPicture({ setPicture, size }) {
+  const handleChange = (event) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setPicture(e.target.result);
+      TrueFalseFunc(e.target.result, size);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  return (
+    <input type="file" accept="image/*" onChange={handleChange} />
+  );
+}
