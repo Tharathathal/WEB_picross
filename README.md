@@ -10,6 +10,7 @@ Il faut d'abord installer la librairie MUI pour pouvoir afficher les composants 
 
 L'objectif est de noircir les cases d'une grille pour former une image.
 Le nombre de cases à noircir est indiqué autour du tableau de la manière suivante : en haut le nombre de cases noires dans chaque colonne, et à gauche pour les lignes. Plusieurs nombres peuvent être indiqués pour une même ligne/colonne : c'est le nombre de cases noires à la suite sur la ligne/colonne.
+
 *Ex : si (2·3) est indiqué à côté d'une ligne, cela signifie qu'il faut noircir 2 cases, laisser une ou plusieurs cases vides, puis noircir 3 cases*
 
 Le joueur possède deux options : noircir une case ou poser une croix dans une case qu'il sait blanche. Il peut changer entre ces deux symboles à l'aide du *switch* sous la grille.
