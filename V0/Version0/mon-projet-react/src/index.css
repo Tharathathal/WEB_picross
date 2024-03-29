@@ -1,0 +1,71 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container {
+  display: flex; /* Utilise Flexbox */
+  justify-content: center; /* Centre horizontalement dans le conteneur */
+  align-items: center; /* Centre verticalement dans le conteneur */
+  /* height: 20vh; à mettre si on veut pour taille du conteneur */
+  flex-direction: column; /* Organise les éléments en colonne */
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.loginButton {
+  padding: 10px 20px;
+  background-color: #007bff; /* Couleur de fond bleue */
+  color: white; /* Texte blanc */
+  border: none;
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Change le curseur en main pour indiquer que c'est cliquable */
+  font-size: 16px; /* Augmente la taille du texte */
+  transition: background-color 0.3s ease; /* Transition douce pour le survol */
+  margin: 10px 0;
+}
+
+.loginButton:hover {
+  background-color: #0056b3; /* Couleur de fond plus foncée au survol */
+}
+
+.form-box {
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 320px; /* largeur*/
+  margin: auto;
+  background: white;
+  border-radius: 8px;
+  margin-top: auto; 
+  margin-bottom: auto;
+}
+
+label {
+  margin-bottom: 5px;/* distance de 5 pixels entre chaque et label et élém en dessous */
+  font-family: Arial, sans-serif; /*police*/
+  font-size: 16px; /*taille*/
+  font-weight: bold; /*en gras*/
+  color: #333; /* Une couleur sombre pour une meilleure lisibilité */
+}
+
+input[type="text"], input[type="password"] {
+  padding: 10px; /*padding autour du contenu du champ */
+  border: 3px solid #007bff; /*bordure du champ : epaisseur + couleur */
+  border-radius: 5px; /* arrondi angles du champ (que lors de la saisie?)*/
+}
+
+.user-space-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
