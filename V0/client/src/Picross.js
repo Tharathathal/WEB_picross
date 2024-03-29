@@ -214,7 +214,6 @@ function Game() {
           </div>
         ) : (
           <>
-          <form className='form-box'>
             <Hearts numErrors={errors.reduce((acc, curr) => acc + (curr ? 1 : 0), 0)} />
             <div className="container">
               <div className="row-wrapper">
@@ -242,7 +241,6 @@ function Game() {
             <div className="switch">
               <MySwitch checked={blackIsPlayed} onChange={handleSwitchChange} />
             </div>
-            </form>
           </>
         )}
       </>)}
