@@ -2,8 +2,8 @@
 
 ## Prérequis
 
-Il faut posséder MongoDB. Pour un test optimal du projet, nous conseillons d'importer une base de donnée dans "WEB.Users.json". Pour cela, télécharger l'outil en ligne de commande "mongoimport" qui fait partie des MongoDB Database Tools : https://www.mongodb.com/try/download/database-tools 
-Puis exécuter : "mongoimport --db WEB --collection users --file ./WEB.Users.json --jsonArray", ce qui créera une bdd "WEB". Celle-ci comporte des utilisateurs (ainsi que leurs informations).
+Il faut posséder MongoDB. Pour un test optimal du projet, nous conseillons d'importer la base de donnée dans `WEB.Users.json`. Pour cela, télécharger l'outil en ligne de commande `mongoimport` qui fait partie des MongoDB Database Tools : https://www.mongodb.com/try/download/database-tools 
+Puis exécuter : `mongoimport --db WEB --collection users --file ./WEB.Users.json --jsonArray`, ce qui créera une base de données "WEB". Celle-ci comporte des utilisateurs ainsi que leurs informations.
 
 Il faut télécharger :
 - Côté serveur : 
@@ -22,7 +22,7 @@ Dans un autre terminal, lancer le projet react : `npm start`
 
 Dans `Version0/mon-projet-react/src/App.js`, remplacer toutes les instances de *componentsV0* par *componentsV1* pour jouer avec la fonctionnalité d'import d'images. Sinon, le jeu générera une grille aléatoirement.
 
-Pour commencer une partie, il faut se connecter ou créer un compte utilisateur. Il faut ensuite choisir la difficulté et importer son image pour générer un Picross.
+Pour commencer une partie, il faut se connecter ou créer un compte utilisateur. Lorsqu'on lance une nouvelle partie, il faut *d'abord* choisir la difficulté *puis* importer son image pour générer un Picross. Attention, l'image doit être *carrée*.
 
 ## Règles du jeu
 
