@@ -2,9 +2,6 @@
 
 ## Prérequis
 
-Il faut posséder MongoDB. Pour un test optimal du projet, nous conseillons d'importer la base de donnée dans `WEB.Users.json`. Pour cela, télécharger l'outil en ligne de commande `mongoimport` qui fait partie des MongoDB Database Tools : https://www.mongodb.com/try/download/database-tools 
-Puis exécuter : `mongoimport --db WEB --collection users --file ./WEB.Users.json --jsonArray`, ce qui créera une base de données "WEB". Celle-ci comporte des utilisateurs ainsi que leurs informations.
-
 Il faut télécharger :
 - Côté serveur : 
   - Mongoose (API MongoDB) : `npm install mongoose`
@@ -13,6 +10,8 @@ Il faut télécharger :
 - Côté du projet React : `npm install react-router-dom`
 
 Il faut installer la librairie MUI pour pouvoir afficher les composants : `npm install @mui/material @emotion/react @emotion/styled`
+
+Il faut créer une base de donnée "WEB" en exécutant "node createBDD.js".
 
 ## Démarrage du jeu
 
