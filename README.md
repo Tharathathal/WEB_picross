@@ -22,7 +22,15 @@ Dans un autre terminal, lancer le projet react : `npm start`
 
 Dans `Version0/mon-projet-react/src/App.js`, remplacer toutes les instances de *componentsV0* par *componentsV1* pour jouer avec la fonctionnalité d'import d'images. Sinon, le jeu générera une grille aléatoirement.
 
-Pour commencer une partie, il faut se connecter ou créer un compte utilisateur. Lorsqu'on lance une nouvelle partie, il faut *d'abord* choisir la difficulté *puis* importer son image pour générer un Picross. Attention, l'image doit être *carrée*.
+Pour commencer une partie, il faut se connecter ou créer un compte utilisateur. 
+
+### V0
+
+En jouant avec la version 0, il suffit de choisir un niveau de difficulté, qui définit les dimensions de la grille. Puis la difficulté est élevée, plus la grille sera grande. A chaque partie, un motif de solution est généré aléatoirement.
+
+### V1
+
+La version 1 permet à l'utilisateur d'importer l'image de son choix pour la transformer en motif. *Attention, l'image choisie doit être carrée*. Lorsqu'on lance une nouvelle partie, il faut *d'abord* choisir la difficulté *puis* importer son image pour générer un Picross. 
 
 ## Règles du jeu
 
