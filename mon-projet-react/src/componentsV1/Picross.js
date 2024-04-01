@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch' ;
 import { styled } from '@mui/material/styles'
 import GetParam from './Param';
+import './Picross.css'; 
 
 //Parametrage du switch
 const MySwitch = styled(Switch)(({ theme }) => ({

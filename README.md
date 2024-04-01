@@ -1,7 +1,11 @@
 # WEB_picross
 
 ## Prérequis
-
+Pour la base de données:
+- Sur le site officiel de MongoDB:
+  - Télécharger MongoDB Community Server 
+  - Télécharger MongoCompass pour pouvoir observer la base de données (normalement il devrait s'installer de lui-même avec le wizard de MongoDB Community Server)
+  
 Il faut télécharger :
 - Côté serveur : 
   - Mongoose (API MongoDB) : `npm install mongoose`

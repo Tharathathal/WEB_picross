@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from '@mui/material';
 
-function GetParam({ setSize, setPicture }) {
+function GetParam({ setSize, setPicture, setSquaresColor, setSquaresState, setErrors, setNumbers }) {
     const [value, setValue] = useState("");
     
     const handleChange = (event) => {
         setValue(event.target.value); // Update the state with the selected value
         setSize(parseInt(event.target.value)); // Convert the selected value to an integer and set the size
         //setPicture(Array(parseInt(event.target.value)).fill(null).map(() => Math.random() < 0.5)); //Set random picture
+        setSquaresColor(Array(parseInt(event.target.value)).fill(null));
+        setSquaresState(Array(parseInt(event.target.value)).fill(null));
+        setErrors(Array(parseInt(event.target.value)).fill(null));
+        setNumbers(Array(2 * Math.sqrt(parseInt(event.target.value))).fill(null));
       }
 
     return (
