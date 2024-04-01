@@ -11,7 +11,7 @@ Il faut télécharger :
 
 Il faut installer la librairie MUI pour pouvoir afficher les composants : `npm install @mui/material @emotion/react @emotion/styled`
 
-Il faut créer une base de donnée "WEB" en exécutant "node createBDD.js".
+Il faut créer une base de donnée "WEB" en exécutant `node createBDD.js`.
 
 ## Démarrage du jeu
 
