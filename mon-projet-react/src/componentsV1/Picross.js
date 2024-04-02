@@ -3,6 +3,8 @@ import Switch from '@mui/material/Switch' ;
 import { styled } from '@mui/material/styles'
 import GetParam from './Param';
 import './Picross.css'; 
+import { Link } from "react-router-dom"; // Pour le retour au UserSpace
+import { useParams } from "react-router-dom"; // Pour le retour au UserSpace
 
 //Parametrage du switch
 const MySwitch = styled(Switch)(({ theme }) => ({
@@ -198,6 +200,7 @@ function Game() {
       setSquaresState(futureSquaresState);
     }
   };
+  let { username } = useParams(); // Pour le retour au UserSpace
   
   return (
     <>
@@ -212,6 +215,8 @@ function Game() {
         {endgame ? (
           <div>
             {win ? <h2> You won ! </h2> : <h2> Game over </h2>}
+            <label>Return to your personal space:</label>
+            <Link to={`/${username}`}><button className="loginButton">My user space</button></Link>
           </div>
         ) : (
           <>

@@ -68,7 +68,7 @@ function UserSpace() {
       </form>
       <form onClick={handleClick} className="form-box">
       <div className="container">
-      <Link to="/play"><button className="loginButton">NEW GAME</button></Link>
+      <Link to={`/${username}/play`}><button className="loginButton">NEW GAME</button></Link>
       </div>
       </form>
     </>
